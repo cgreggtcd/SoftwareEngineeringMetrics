@@ -4,7 +4,18 @@ This project is to develop a dashboard for the presentation of a range of metric
 ## Setup Instructions
 ### Run Version on GitHub
 
-To run the version on GitHub, clone the repo to your desktop. Open a terminal in the directory of the repo. Then, run
+To run the version on GitHub, clone the repo to your desktop. 
+
+#### Run by Script (recommended)
+
+Run the webapp by right-clicking on setup.bat and selecting `run`.
+
+Then, you can open the web app on localhost:8080. This will also run tests!
+
+
+#### Run from Command Line
+
+Open a terminal in the directory of the repo. Then, run
 
     ./mvnw clean install spring-boot:run   
 
