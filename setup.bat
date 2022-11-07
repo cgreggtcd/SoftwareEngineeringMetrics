@@ -1,0 +1,1 @@
+CALL mvnw clean install spring-boot:run
