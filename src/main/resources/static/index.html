@@ -3,8 +3,57 @@
 <head>
   <title>Software Engineering Metrics</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+  <link rel="stylesheet" href="style.css">
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 </head>
 <body>
-<p>Welcome to Software Engineering Metrics</p>
+<section id ="menu">
+  <nav>
+  <div class="logo">
+    <img src="spacer.png" alt="">
+    <h2 style="color: darkcyan">Measurement Dashboard</h2>
+  </div>
+  <div class = "item">
+    <li><i class="fas fa-cat"></i><a href = "#">Dashboard</a></li>
+    <li><i class="fa fa-user"></i></i><a href = "#"></a><input type="button" value="Login" onclick="location.href = 'page.html';"></li>
+    <li><i class="fa fa-play"></i><a href = "#">Measurement</a></li>
+    <li><i class="fa fa-pen"></i><a href = "#">Edit</a></li>
+    <li><i class="fa fa-chart-line"></i><a href = "#">Table</a></li>
+  </div>
+  </nav>
+</section>
+<interface>
+  <navigation>
+    <n1>
+      <div>
+              <i id="menu-btn" class="fas fa-bars">
+              </i>
+      </div>
+      <search>
+        <i class="fa fa-search">
+          <input type="text" placeholder="Search">
+        </i>
+      </search>
+    </n1>
+  </navigation>
+  <h3 class="i-name">
+    Dashboard
+  </h3>
+  <div class="value">
+    <div class="val-box">
+      <i class="fas fa-users"></i>
+      <div>
+        <h3>9,600</h3>
+        <span>Online Users</span>
+      </div>
+    </div>
+  </div>
+</interface>
+<script>
+  $('#menu-btn').click(function (){
+    $('#menu').toggleClass("active");
+  })
+</script>
 </body>
 </html>
