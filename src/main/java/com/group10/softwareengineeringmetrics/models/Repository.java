@@ -24,6 +24,7 @@ public class Repository {
     private List<Branch> branches;
     //private List<String> languages;
     private List<User> collaborators;
+    private User owner;
     //private List<Commit> commits;
 
 
@@ -63,6 +64,10 @@ public class Repository {
     public List<User> getCollaborators() { return collaborators; }
 
     public void addCollaborator(User user) { collaborators.add(user); }
+
+    public User getOwner() { return owner; }
+
+    public void setOwner(User owner) { this.owner = owner; }
 
     @Override
     public String toString() {
