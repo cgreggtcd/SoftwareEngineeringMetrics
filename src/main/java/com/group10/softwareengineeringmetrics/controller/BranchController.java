@@ -26,7 +26,7 @@ public class BranchController {
         return new ResponseEntity<>(branches, HttpStatus.OK);
     }
 
-    @PutMapping("/add")
+    @PostMapping("/add")
     public ResponseEntity<Branch> addBranch(@RequestBody Branch branch){
         Branch newBranch = branchRepository.save(branch);
 

@@ -2,6 +2,7 @@ package com.group10.softwareengineeringmetrics;
 
 import com.group10.softwareengineeringmetrics.models.Branch;
 import com.group10.softwareengineeringmetrics.repository.BranchRepository;
+import com.group10.softwareengineeringmetrics.controller.BranchController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
