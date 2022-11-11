@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "https://localhost:8081")
 @RestController
-@RequestMapping("/db")
+@RequestMapping("/db/user")
 public class UserController {
     @Autowired
     UserRepository userRepository;

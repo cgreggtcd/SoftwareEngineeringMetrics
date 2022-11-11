@@ -1,5 +1,5 @@
 ###
-POST http://localhost:8080/db/add
+POST http://localhost:8080/db/branch/add
 Content-Type: application/json
 
 {

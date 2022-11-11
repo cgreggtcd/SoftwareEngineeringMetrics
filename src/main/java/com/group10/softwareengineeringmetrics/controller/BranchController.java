@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "https://localhost:8081")
 @RestController
-@RequestMapping("/db")
+@RequestMapping("/db/branch")
 public class BranchController {
     @Autowired
     BranchRepository branchRepository;
