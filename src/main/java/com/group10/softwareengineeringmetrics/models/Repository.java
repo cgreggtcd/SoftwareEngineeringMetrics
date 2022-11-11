@@ -13,8 +13,11 @@ public class Repository {
     @Column(name="name")
     private String name;
 
-    @Column(name="readMe")
-    private String readMe;
+    @Column(name="isPrivate")
+    private boolean isPrivate;
+
+//    @Column(name="readMe")
+//    private String readMe;
 
 //    @Column(name="releases")
 //    private int releases;
@@ -32,9 +35,9 @@ public class Repository {
 
     }
 
-    public Repository(String name, String readMe){
+    public Repository(String name, Boolean isPrivate){
         this.name = name;
-        this.readMe = readMe;
+        this.isPrivate = isPrivate;
     }
 
     public long getId() {
@@ -49,13 +52,13 @@ public class Repository {
         this.name = name;
     }
 
-    public String getReadMe() {
-        return readMe;
-    }
-
-    public void setReadMe(String readMe) {
-        this.readMe = readMe;
-    }
+//    public String getReadMe() {
+//        return readMe;
+//    }
+//
+//    public void setReadMe(String readMe) {
+//        this.readMe = readMe;
+//    }
 
     public List<Branch> getBranches() { return branches; }
 
@@ -69,8 +72,12 @@ public class Repository {
 
     public void setOwner(User owner) { this.owner = owner; }
 
+    public boolean getIsPrivate () { return isPrivate; }
+
+    public void setIsPrivate (boolean privacy) { this.isPrivate = privacy; }
+
     @Override
     public String toString() {
-        return "Repository [id=" + id + ", name=" + name + ", readMe=" + readMe + "]";
+        return "Repository [id=" + id + ", name=" + name + ", isPrivate=" + isPrivate + "]";
     }
 }
