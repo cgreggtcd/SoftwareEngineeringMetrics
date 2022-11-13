@@ -7,7 +7,7 @@ padding: 0;
 body{
     font-family: montserrat;
     width: 100%;
-    background: aliceblue;
+    background: #121212;
     position: relative;
     display: flex;
 }
@@ -26,7 +26,7 @@ body{
 }
 
 #menu{
-background: #111827;
+background: #3B3B3B;
 width: 300px;
 height: 100%;
     position: fixed;
@@ -101,17 +101,23 @@ n1{
 interface navigation{
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    background: white;
+    background: #3B3B3B;
     padding: 15px 30px;
-    border-bottom: 3px solid #1d0ecc;
     width: calc(100% - 300px);
 }
 
+interface navigation h1 {
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .i-name{
-    color: #444a53;
+    color: white;
     padding: 30px 30px 0px 30px;
-    font-size: 24px;
+    font-size: 35px;
+    background-color: #121212;
+    font-family: Arial, Helvetica, sans-serif;
+
 }
 
 .value{
@@ -174,7 +180,7 @@ interface navigation search i{
 
 @media screen {
     #menu{
-        background: #111827;
+        background: #3B3B3B;
         width: 270px;
         position: fixed;
         left: -270px;
@@ -200,4 +206,63 @@ interface navigation search i{
     interface navigation{
         width: 100%;
     }
+}
+tray {
+    margin-left: 50%;
+}
+threebuttons {
+
+
+}
+avgprsize {
+    display: inline-block;
+    width: 30%;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 600;
+    border-radius: 15px;
+    padding: 30px 150px 30px 30px;
+    border: none;
+    background-color: #3B3B3B;
+    color: #fff;
+    margin-left: 5%;
+}
+newwork {
+    display: inline-block;
+    width: 30%;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 600;
+    border-radius: 15px;
+    padding: 30px 150px 30px 30px;
+    border: none;
+    background-color: #3B3B3B;
+    color: #fff; 
+    margin-left: 5%;
+}
+refactor {
+    display: inline-block;
+    width: 30%;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 600;
+    border-radius: 15px;
+    padding: 30px 150px 30px 30px;
+    border: none;
+    background-color: #3B3B3B;
+    color: #fff;
+    margin-left: 5%;
+}
+navSwengMetrics {
+    margin-left:2%;
+}
+
+interface navigation tray {
+    color: white;
 }
