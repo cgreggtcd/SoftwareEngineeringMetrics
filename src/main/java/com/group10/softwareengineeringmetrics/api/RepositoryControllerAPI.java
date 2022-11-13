@@ -2,6 +2,7 @@ package com.group10.softwareengineeringmetrics.api;
 
 import com.fasterxml.jackson.databind.deser.impl.NullsConstantProvider;
 import com.group10.softwareengineeringmetrics.models.Repository;
+import com.group10.softwareengineeringmetrics.models.User;
 import org.hibernate.engine.spi.ManagedEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -36,12 +38,12 @@ public class RepositoryControllerAPI {
 //        return result;
 //    }
 
-    @RequestMapping (method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getRepoCollaborators (String username, String repoName) {
-        ResponseEntity<String> response =
-                restTemplate.getForEntity(String.format(git_api_url + "/repos/" + username + "/" + repoName
-                + "/collaborators"), String.class);
-        response.toString();
-        return response;
-    }
+//    @RequestMapping (method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ArrayList<User> getRepoCollaborators (String username, String repoName) {
+//        ResponseEntity<String> response =
+//                restTemplate.getForEntity(String.format(git_api_url + "/repos/" + username + "/" + repoName
+//                + "/collaborators"), String.class);
+//        response.toString();
+//        return response;
+//    }
 }
