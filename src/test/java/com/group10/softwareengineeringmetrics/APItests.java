@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpStatusCodeException;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -53,50 +54,44 @@ public class APItests {
         Object[] responseBody = response.getBody();
         HashMap<String, String> o1 = (HashMap<String, String>) responseBody[1];
 
+        //Getting sha, time, authorName
+        String sha = o1.get("sha");
+        String time;
+        String authorName;
         Object committer = o1.get("commit");
         HashMap<String, String> committerHashMap = (HashMap<String, String>) committer;
         Object author = committerHashMap.get("author");
         HashMap<String, String> authorHashMap = (HashMap<String, String>) author;
-        String authorName = authorHashMap.get("name");
-        User authorOfThisCommit = new User(authorName);
+        authorName = authorHashMap.get("name");
+        time = authorHashMap.get("date");
 
-        String message = committerHashMap.get("message");
+        //getting repo id
+        ResponseEntity<String> responseRepo = repoAPI.getRepo("cgreggtcd", "SoftwareEngineeringMetrics" );
+        byte[] resultBytes = responseRepo.getBody().getBytes();
+        JSONObject resultJSON = (JSONObject) parser.parse(resultBytes);
+        Integer id = (Integer) resultJSON.get("id");
+        long repoId = (long) id;
 
-        //Commit commit = new Commit(new Repository("SoftwareEngineeringMetrics", false), authorOfThisCommit, message);
-        //Object[] resultBytes = response.getBody();
-        //JSONObject resultJSON = (JSONObject) parser.parse(resultBytes);
+        //getting authorId
+        Object authorObject = o1.get("author");
+        HashMap<String, Integer> authorHashMap2 = (HashMap<String, Integer>) authorObject;
+        Integer authorId = authorHashMap2.get("id");
 
-        //String resultString = response.getBody().toString();
-        //JSONArray jsonArray = new JSONArray(resultBytes);
-        //String[] objects = response.getBody();
-//        ArrayList<Commit> commits = new ArrayList<Commit>();
-//
-//        for(int i = 0; i < objects.length; i++)
-//        {
-//            Object currentCommit = objects[i];
-//            JSONObject asJSON = (JSONObject) parser.parse((byte[]) currentCommit);
-//            System.out.println("Extra line");
-//            JSONArray jsonArray = new JSONArray();
-//
-//        }
-//        JSONArray jsonArray = new JSONArray();
-//        ObjectMapper objectMapper = new ObjectMapper();
-        //byte[] resultBytes = response.getBody().getBytes();
-//        Commit[] commits = objectMapper.readValue(resultBytes, Commit [].class);
+        //getting specific commit to get changes
+        ResponseEntity<String> specificCommit = commitsAPI.getSpecificCommit("cgreggtcd", "SoftwareEngineeringMetrics", sha);
+        byte[] resultBytesCommit = specificCommit.getBody().getBytes();
+        JSONObject resultJSONCommit = (JSONObject) parser.parse(resultBytesCommit);
+        Object changes = resultJSONCommit.get("stats");
+        HashMap<String, Integer> changesHashMap = (HashMap<String, Integer>) changes;
+        int changesStat = changesHashMap.get("total");
+        int additions = changesHashMap.get("additions");
+        int deletions = changesHashMap.get("deletions");
 
- //       JSONObject resultJSON = (JSONObject) parser.parse(resultBytes);
+        //make commit object
+        Commit currentCommit = new Commit(sha, time, authorName, authorId, additions, deletions, changesStat,
+                "SoftwareEngineeringMetrics", repoId);
+
         assertEquals(200, response.getStatusCode().value());
     }
-
-    //ERROR: Requires authentication
-//    @Test
-//    public void testGetRepoCollaborators() {
-//        ResponseEntity<String> response = repoAPI.getRepoCollaborators("hannahfoley-1", "Functional_Programming" );
-//        assertEquals(200, response.getStatusCode().value());
-//        //TODO: Parse and test result JSON object
-//    }
-
-
-
 
 }

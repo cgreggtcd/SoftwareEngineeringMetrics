@@ -12,7 +12,6 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class CommitControllerAPI {
-    JSONParser parser = new JSONParser();
 
     @Autowired
     private RestTemplate restTemplate = new RestTemplate();
@@ -20,8 +19,16 @@ public class CommitControllerAPI {
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object []> getCommitsForRepo(String username, String repoName)  {
-        ResponseEntity<Object []> response = (ResponseEntity<Object[]>) restTemplate.getForEntity(git_api_url + "/repos/" + username + "/" + repoName
+        ResponseEntity<Object []> response = restTemplate.getForEntity(git_api_url + "/repos/" + username + "/" + repoName
                 + "/commits", Object[].class);
+        return response;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getSpecificCommit(String username, String repoName, String sha) {
+        ResponseEntity<String> response = restTemplate.getForEntity(git_api_url + "/repos/" + username + "/" + repoName
+                + "/commits/" + sha, String.class);
+        response.toString();
         return response;
     }
 
