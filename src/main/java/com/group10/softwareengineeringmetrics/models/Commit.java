@@ -33,7 +33,14 @@ public class Commit {
     @Column(name="changes")
     private int changes;
 
-    public Commit(String sha, String branch, String time, String authorName, long authorId, int additions, int deletions, int changes) {
+    @Column(name="repoFullName")
+    private String repoFullName;
+
+    @Column(name="repoId")
+    private long repoId;
+
+    public Commit(String sha, String branch, String time, String authorName, long authorId, int additions,
+                  int deletions, int changes, String repoFullName, long repoId) {
         this.sha = sha;
         this.branch = branch;
         this.time = time;
@@ -42,6 +49,8 @@ public class Commit {
         this.additions = additions;
         this.deletions = deletions;
         this.changes = changes;
+        this.repoFullName = repoFullName;
+        this.repoId = repoId;
     }
 
     public String getSha() { return sha; }
@@ -67,4 +76,17 @@ public class Commit {
 
     public int getChanges() { return changes; }
     public void setChanges(int changes) { this.changes = changes; }
+
+    public String getRepoFullName() { return repoFullName; }
+    public void setRepoFullName(String repoFullName) { this.repoFullName = repoFullName; }
+
+    public long getRepoId() { return repoId; }
+    public void setRepoId(long repoId) { this.repoId = repoId; }
+
+    @Override
+    public String toString() {
+        return "Branch [sha=" + sha + ", branch=" + branch + ", time=" + time + ", authorName=" + authorName +
+                ", authorId=" + authorId + ", additions=" + additions + ", deletions=" + deletions +
+                ", changes=" + changes + ", repoFullName=" + repoFullName + ", repoId=" + repoId + "]";
+    }
 }
