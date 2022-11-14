@@ -170,6 +170,25 @@ interface navigation search input{
     color: #828997;
 }
 
+chart{
+    width: 800px;
+    padding: 60px 100px;
+    border-radius: 500px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+chart .box{
+    background: #3B3B3B;
+    width: 800px;
+    padding: 55px 75px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 interface navigation search i{
     margin-right: 14px;
 }
