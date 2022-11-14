@@ -16,7 +16,7 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class RepositoryTest {
+public class RepositoryTests {
 
     // This works to run, but throws an error in editing, so I have suppressed that error.
     /** @noinspection SpringJavaInjectionPointsAutowiringInspection*/
@@ -24,19 +24,20 @@ public class RepositoryTest {
     private TestEntityManager entityManager;
 
     @Autowired
-    BranchRepository branchRepository;
+    private BranchRepository branchRepository;
 
     @Autowired
-    RepositoryRepository repositoryRepository;
+    private CommitRepository commitRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private PullRequestRepository pullRequestRepository;
 
     @Autowired
-    CommitRepository commitRepository;
+    private RepositoryRepository repositoryRepository;
 
     @Autowired
-    PullRequestRepository pullRequestRepository;
+    private UserRepository userRepository;
+
 
     @Test
     public void emptyBranchRepo() {
@@ -139,6 +140,19 @@ public class RepositoryTest {
         assertThat(pullRequests).hasSize(3).contains(pul1, pul2, pul3);
     }
 
+    @Test
+    public void testGetCommitTimesByUser(){
+        Commit com1 = new Commit("abcdef123456789", "Branch", "2022-11-07T12:28:00Z", "author",
+                12345, 2, 0, 0, "Repo", 1111111);
+        entityManager.persist(com1);
+        Commit com2 = new Commit("123456789abcdef", "Branch", "2022-11-09T11:28:00Z", "author",
+                12345, 20, 5, 1, "Repo", 1111111);
+        entityManager.persist(com2);
+        Commit com3 = new Commit("1234abcdef56789", "Branch", "2022-10-09T11:30:00Z", "author1",
+                12345, 15, 20, 3, "Repo", 1111111);
+        entityManager.persist(com3);
 
-
+        List<Commit> commits = commitRepository.findByAuthorName("author");
+        assertThat(commits).hasSize(2).contains(com1, com2);
+    }
 }
