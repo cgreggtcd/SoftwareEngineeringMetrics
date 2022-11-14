@@ -6,15 +6,17 @@ import java.util.List;
 @Entity
 @Table(name = "repositories")
 public class Repository {
+    //MAKING CHANGES TO API VERSION TO MATCH DATABASE VERSION
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name="name")
-    private String name;
+    @Column(name="full_name")
+    private String full_name;
 
-    @Column(name="isPrivate")
-    private boolean isPrivate;
+//    @Column(name="isPrivate")
+//    private boolean isPrivate;
 
 //    @Column(name="readMe")
 //    private String readMe;
@@ -32,12 +34,11 @@ public class Repository {
 
 
     public Repository() {
-
     }
 
-    public Repository(String name, Boolean isPrivate){
-        this.name = name;
-        this.isPrivate = isPrivate;
+    public Repository(String full_name,long id ){
+        this.full_name = full_name;
+        this.id = id;
     }
 
     public long getId() {
@@ -45,11 +46,11 @@ public class Repository {
     }
 
     public String getName() {
-        return name;
+        return full_name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.full_name = name;
     }
 
 //    public String getReadMe() {
@@ -72,12 +73,12 @@ public class Repository {
 
     public void setOwner(User owner) { this.owner = owner; }
 
-    public boolean getIsPrivate () { return isPrivate; }
-
-    public void setIsPrivate (boolean privacy) { this.isPrivate = privacy; }
+//    public boolean getIsPrivate () { return isPrivate; }
+//
+//    public void setIsPrivate (boolean privacy) { this.isPrivate = privacy; }
 
     @Override
     public String toString() {
-        return "Repository [id=" + id + ", name=" + name + ", isPrivate=" + isPrivate + "]";
+        return "Repository [id=" + id + ", name=" + full_name + "]";
     }
 }

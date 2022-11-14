@@ -36,21 +36,16 @@ public class APItests {
         //System.out.println(response.toString());
         byte[] resultBytes = response.getBody().getBytes();
         JSONObject resultJSON = (JSONObject) parser.parse(resultBytes);
+
         String newRepoName = (String) resultJSON.get("name");
-        String newRepoVisibility= (String) resultJSON.get("visibility");
-        Boolean isPrivate = null;
-        if(newRepoVisibility.equalsIgnoreCase("public"))
-        {
-            isPrivate = false;
-        }
-        else
-        {
-            isPrivate = true;
-        }
-        Repository newRepo = new Repository(newRepoName, isPrivate);
-        assertEquals(200, response.getStatusCode().value());
-        //TODO: Parse and test result JSON object
+        //String newRepoVisibility= (String) resultJSON.get("visibility");
+        Integer id = (Integer) resultJSON.get("id");
+        long idLong = (long) id;
+
+        Repository newRepo = new Repository(newRepoName, idLong);
+        assertEquals(newRepoName, "Functional_Programming");
     }
+
 
     @Test
     public void testGetRepoCommits() throws ParseException, IOException {
@@ -67,7 +62,7 @@ public class APItests {
 
         String message = committerHashMap.get("message");
 
-        Commit commit = new Commit(new Repository("SoftwareEngineeringMetrics", false), authorOfThisCommit, message);
+        //Commit commit = new Commit(new Repository("SoftwareEngineeringMetrics", false), authorOfThisCommit, message);
         //Object[] resultBytes = response.getBody();
         //JSONObject resultJSON = (JSONObject) parser.parse(resultBytes);
 
