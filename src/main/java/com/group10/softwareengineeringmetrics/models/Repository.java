@@ -21,10 +21,10 @@ public class Repository {
 
     //THIS PROBABLY DOESN'T WORK FOR TABLE FORMAT IN OUR CURRENT DATABASE
     // HOPEFULLY CAN BE IMPLEMENTED WHEN WE GET API
-    private List<Branch> branches;
+    //private List<Branch> branches;
     //private List<String> languages;
-    private List<User> collaborators;
-    private User owner;
+    //private List<User> collaborators;
+    //private User owner;
     //private List<Commit> commits;
 
 
@@ -57,17 +57,17 @@ public class Repository {
         this.readMe = readMe;
     }
 
-    public List<Branch> getBranches() { return branches; }
+    //public List<Branch> getBranches() { return branches; }
 
-    public void addBranch(Branch branch) { branches.add(branch); }
+    //public void addBranch(Branch branch) { branches.add(branch); }
 
-    public List<User> getCollaborators() { return collaborators; }
+    //public List<User> getCollaborators() { return collaborators; }
 
-    public void addCollaborator(User user) { collaborators.add(user); }
+    //public void addCollaborator(User user) { collaborators.add(user); }
 
-    public User getOwner() { return owner; }
+    //public User getOwner() { return owner; }
 
-    public void setOwner(User owner) { this.owner = owner; }
+    //public void setOwner(User owner) { this.owner = owner; }
 
     @Override
     public String toString() {

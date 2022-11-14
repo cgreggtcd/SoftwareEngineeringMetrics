@@ -15,9 +15,7 @@ public class Branch {
     @Column(name="isProtected")
     private boolean isProtected;
 
-    public Branch() {
-
-    }
+    public Branch() {}
 
     public Branch(String name, boolean isProtected){
         this.name = name;
@@ -44,8 +42,8 @@ public class Branch {
         this.isProtected = isProtected;
     }
 
-    @Override
-    public String toString() {
+    //@Override
+    /*public String toString() {
         return "Branch [id=" + id + ", name=" + name + ", protected=" + isProtected + "]";
-    }
+    }*/
 }
