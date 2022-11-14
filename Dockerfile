@@ -1,5 +1,7 @@
-FROM openjdk:17
+FROM maven:3.8.2-jdk-8
+
 WORKDIR /app
-EXPOSE 8080
-COPY target/*.jar /app/app.jar
-CMD ["java", "-jar", "app.jar"]
+COPY . .
+RUN mvn clean install
+
+CMD mvn spring-boot:run
