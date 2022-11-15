@@ -51,8 +51,9 @@ nav .logo{
 
 nav li{
     list-style: none;
-    padding: 15px 0;
+    padding: 15px;
     transition: all .3s;
+    display: block;
 }
 
 nav li:hover{
@@ -70,7 +71,7 @@ nav li i{
     height: 30px;
     line-height: 30px;
     text-align: center;
-    front-size: 14px;
+    font-size: 14px;
     margin: 0 10px 0 25px;
 }
 
