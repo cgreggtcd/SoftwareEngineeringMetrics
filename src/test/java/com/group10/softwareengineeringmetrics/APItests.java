@@ -50,46 +50,55 @@ public class APItests {
 
     @Test
     public void testGetRepoCommits() throws ParseException, IOException {
+        //Just gets commits to main branch ?
         ResponseEntity<Object []> response = commitsAPI.getCommitsForRepo("cgreggtcd", "SoftwareEngineeringMetrics" );
         Object[] responseBody = response.getBody();
-        HashMap<String, String> o1 = (HashMap<String, String>) responseBody[1];
 
-        //Getting sha, time, authorName
-        String sha = o1.get("sha");
-        String time;
-        String authorName;
-        Object committer = o1.get("commit");
-        HashMap<String, String> committerHashMap = (HashMap<String, String>) committer;
-        Object author = committerHashMap.get("author");
-        HashMap<String, String> authorHashMap = (HashMap<String, String>) author;
-        authorName = authorHashMap.get("name");
-        time = authorHashMap.get("date");
+        ArrayList<Commit> commitsInThisRepo = new ArrayList<>();
 
-        //getting repo id
-        ResponseEntity<String> responseRepo = repoAPI.getRepo("cgreggtcd", "SoftwareEngineeringMetrics" );
-        byte[] resultBytes = responseRepo.getBody().getBytes();
-        JSONObject resultJSON = (JSONObject) parser.parse(resultBytes);
-        Integer id = (Integer) resultJSON.get("id");
-        long repoId = (long) id;
+        for(int i = 0; i < responseBody.length; i++)
+        {
+            HashMap<String, String> o1 = (HashMap<String, String>) responseBody[i];
 
-        //getting authorId
-        Object authorObject = o1.get("author");
-        HashMap<String, Integer> authorHashMap2 = (HashMap<String, Integer>) authorObject;
-        Integer authorId = authorHashMap2.get("id");
+            //Getting sha, time, authorName
+            String sha = o1.get("sha");
+            String time;
+            String authorName;
+            Object committer = o1.get("commit");
+            HashMap<String, String> committerHashMap = (HashMap<String, String>) committer;
+            Object author = committerHashMap.get("author");
+            HashMap<String, String> authorHashMap = (HashMap<String, String>) author;
+            authorName = authorHashMap.get("name");
+            time = authorHashMap.get("date");
 
-        //getting specific commit to get changes
-        ResponseEntity<String> specificCommit = commitsAPI.getSpecificCommit("cgreggtcd", "SoftwareEngineeringMetrics", sha);
-        byte[] resultBytesCommit = specificCommit.getBody().getBytes();
-        JSONObject resultJSONCommit = (JSONObject) parser.parse(resultBytesCommit);
-        Object changes = resultJSONCommit.get("stats");
-        HashMap<String, Integer> changesHashMap = (HashMap<String, Integer>) changes;
-        int changesStat = changesHashMap.get("total");
-        int additions = changesHashMap.get("additions");
-        int deletions = changesHashMap.get("deletions");
+            //getting repo id
+            ResponseEntity<String> responseRepo = repoAPI.getRepo("cgreggtcd", "SoftwareEngineeringMetrics" );
+            byte[] resultBytes = responseRepo.getBody().getBytes();
+            JSONObject resultJSON = (JSONObject) parser.parse(resultBytes);
+            Integer id = (Integer) resultJSON.get("id");
+            long repoId = (long) id;
 
-        //make commit object
-        Commit currentCommit = new Commit(sha, time, authorName, authorId, additions, deletions, changesStat,
-                "SoftwareEngineeringMetrics", repoId);
+            //getting authorId
+            Object authorObject = o1.get("author");
+            HashMap<String, Integer> authorHashMap2 = (HashMap<String, Integer>) authorObject;
+            Integer authorId = authorHashMap2.get("id");
+
+            //getting specific commit to get changes
+            ResponseEntity<String> specificCommit = commitsAPI.getSpecificCommit("cgreggtcd", "SoftwareEngineeringMetrics", sha);
+            byte[] resultBytesCommit = specificCommit.getBody().getBytes();
+            JSONObject resultJSONCommit = (JSONObject) parser.parse(resultBytesCommit);
+            Object changes = resultJSONCommit.get("stats");
+            HashMap<String, Integer> changesHashMap = (HashMap<String, Integer>) changes;
+            int changesStat = changesHashMap.get("total");
+            int additions = changesHashMap.get("additions");
+            int deletions = changesHashMap.get("deletions");
+
+            //make commit object
+            Commit currentCommit = new Commit(sha, time, authorName, authorId, additions, deletions, changesStat,
+                    "SoftwareEngineeringMetrics", repoId);
+
+            commitsInThisRepo.add(currentCommit);
+        }
 
         assertEquals(200, response.getStatusCode().value());
     }
