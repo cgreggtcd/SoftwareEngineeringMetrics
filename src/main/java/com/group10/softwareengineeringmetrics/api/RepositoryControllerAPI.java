@@ -30,20 +30,4 @@ public class RepositoryControllerAPI {
         response.toString();
         return response;
     }
-
-//    public List<Repository> getRepos (String username) {
-//        ResponseEntity<List<Repository>> repos= restTemplate.exchange(git_api_url + "/" + username + "/repos" , HttpMethod.GET, null, new ParameterizedTypeReference<List<Repository>>() {
-//        });
-//        List<Repository> result = repos.getBody();
-//        return result;
-//    }
-
-//    @RequestMapping (method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ArrayList<User> getRepoCollaborators (String username, String repoName) {
-//        ResponseEntity<String> response =
-//                restTemplate.getForEntity(String.format(git_api_url + "/repos/" + username + "/" + repoName
-//                + "/collaborators"), String.class);
-//        response.toString();
-//        return response;
-//    }
 }

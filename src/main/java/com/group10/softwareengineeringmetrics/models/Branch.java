@@ -6,26 +6,21 @@ import javax.persistence.*;
 @Table(name = "branches")
 public class Branch {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
     @Column(name="name")
     private String name;
 
-    @Column(name="isProtected")
-    private boolean isProtected;
+    @Column(name="repoFullName")
+    private String repoFullName;
 
-    public Branch() {
+    @Column(name="repoId")
+    private long repoId;
 
-    }
+    public Branch() {}
 
-    public Branch(String name, boolean isProtected){
+    public Branch(String name, String repoFullName, long repo_id){
         this.name = name;
-        this.isProtected = isProtected;
-    }
-
-    public long getId() {
-        return id;
+        this.repoFullName = repoFullName;
+        this.repoId = repo_id;
     }
 
     public String getName() {
@@ -36,16 +31,20 @@ public class Branch {
         this.name = name;
     }
 
-    public boolean isProtected() {
-        return isProtected;
+    public String getRepoFullName() {
+        return repoFullName;
     }
 
-    public void setProtected(boolean isProtected) {
-        this.isProtected = isProtected;
+    public void setRepoFullName(String repoFullName) {
+        this.repoFullName = repoFullName;
     }
+
+    public long getRepoId() { return repoId; }
+
+    public void setRepoId(long repoId) { this.repoId = repoId; }
 
     @Override
     public String toString() {
-        return "Branch [id=" + id + ", name=" + name + ", protected=" + isProtected + "]";
+        return "Branch [name=" + name + ", repoFullName=" + repoFullName + ", repoId=" + repoId + "]";
     }
 }
