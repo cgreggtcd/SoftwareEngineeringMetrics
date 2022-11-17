@@ -26,7 +26,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class APItests {
+public class APITests {
     RepositoryControllerAPI repoAPI = new RepositoryControllerAPI();
     CommitControllerAPI commitsAPI = new CommitControllerAPI();
     JSONParser parser = new JSONParser();
@@ -43,7 +43,7 @@ public class APItests {
         Integer id = (Integer) resultJSON.get("id");
         long idLong = (long) id;
 
-        Repository newRepo = new Repository(newRepoName, idLong);
+        Repository newRepo = new Repository(idLong, newRepoName);
         assertEquals(newRepoName, "Functional_Programming");
     }
 
