@@ -5,6 +5,7 @@ import com.group10.softwareengineeringmetrics.models.Repository;
 import com.group10.softwareengineeringmetrics.models.User;
 import org.hibernate.engine.spi.ManagedEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -19,8 +20,14 @@ import java.util.List;
 @RestController
 public class RepositoryControllerAPI {
 
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+
     @Autowired
-    private RestTemplate restTemplate = new RestTemplate();
+    private RestTemplate restTemplate = restTemplate();
+
     private String git_api_url = "https://api.github.com";
 
     @RequestMapping (method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
