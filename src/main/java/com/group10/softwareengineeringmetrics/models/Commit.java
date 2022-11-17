@@ -8,14 +8,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "commits")
 public class Commit {
-    //14/11/22 removed references to branch as cannot find a way to get this with API yet
-
     @Id
     @Column(name="sha")
     private String sha;
 
+//14/11/22 removed references to branch as cannot find a way to get this with API yet
 //    @Column(name="branch")
 //    private String branch;
+
 
     @Column(name="time")
     private String time;
@@ -58,6 +58,7 @@ public class Commit {
     public String getSha() { return sha; }
     public void setSha(String sha) { this.sha = sha; }
 
+
 //    public String getBranch() { return branch; }
 //    public void setBranch(String branch) { this.branch = branch; }
 
@@ -87,9 +88,10 @@ public class Commit {
 
     @Override
     public String toString() {
-        return "Branch [sha=" + sha + ", time=" + time + ", authorName=" + authorName +
+        return "Commit [sha=" + sha + ", time=" + time + ", authorName=" + authorName +
                 ", authorId=" + authorId + ", additions=" + additions + ", deletions=" + deletions +
                 ", changes=" + changes + ", repoFullName=" + repoFullName + ", repoId=" + repoId + "]";
+                //+ ", branch=" + branch
     }
-    //+ ", branch=" + branch
+    
 }
