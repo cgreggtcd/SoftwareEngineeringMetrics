@@ -110,13 +110,13 @@ public class RepositoryTests {
 
     @Test
     public void shouldFindAllCommits() {
-        Commit com1 = new Commit("abcdef123456789", "Branch", "2022-11-07T12:28:00Z", "author",
+        Commit com1 = new Commit("abcdef123456789", "2022-11-07T12:28:00Z", "author",
                 12345, 2, 0, 0, "Repo", 1111111);
         entityManager.persist(com1);
-        Commit com2 = new Commit("123456789abcdef", "Branch", "2022-11-09T11:28:00Z", "author",
+        Commit com2 = new Commit("123456789abcdef", "2022-11-09T11:28:00Z", "author",
                 12345, 20, 5, 1, "Repo", 1111111);
         entityManager.persist(com2);
-        Commit com3 = new Commit("1234abcdef56789", "Branch", "2022-10-09T11:30:00Z", "author",
+        Commit com3 = new Commit("1234abcdef56789", "2022-10-09T11:30:00Z", "author",
                 12345, 15, 20, 3, "Repo", 1111111);
         entityManager.persist(com3);
 
@@ -142,13 +142,13 @@ public class RepositoryTests {
 
     @Test
     public void testGetCommitTimesByUser(){
-        Commit com1 = new Commit("abcdef123456789", "Branch", "2022-11-07T12:28:00Z", "author",
+        Commit com1 = new Commit("abcdef123456789", "2022-11-07T12:28:00Z", "author",
                 12345, 2, 0, 0, "Repo", 1111111);
         entityManager.persist(com1);
-        Commit com2 = new Commit("123456789abcdef", "Branch", "2022-11-09T11:28:00Z", "author",
+        Commit com2 = new Commit("123456789abcdef", "2022-11-09T11:28:00Z", "author",
                 12345, 20, 5, 1, "Repo", 1111111);
         entityManager.persist(com2);
-        Commit com3 = new Commit("1234abcdef56789", "Branch", "2022-10-09T11:30:00Z", "author1",
+        Commit com3 = new Commit("1234abcdef56789", "2022-10-09T11:30:00Z", "author1",
                 12345, 15, 20, 3, "Repo", 1111111);
         entityManager.persist(com3);
 

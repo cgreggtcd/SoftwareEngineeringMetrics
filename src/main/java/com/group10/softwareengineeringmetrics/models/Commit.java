@@ -12,8 +12,10 @@ public class Commit {
     @Column(name="sha")
     private String sha;
 
-    @Column(name="branch")
-    private String branch;
+//14/11/22 removed references to branch as cannot find a way to get this with API yet
+//    @Column(name="branch")
+//    private String branch;
+
 
     @Column(name="time")
     private String time;
@@ -39,10 +41,10 @@ public class Commit {
     @Column(name="repoId")
     private long repoId;
 
-    public Commit(String sha, String branch, String time, String authorName, long authorId, int additions,
+    public Commit(String sha, String time, String authorName, long authorId, int additions,
                   int deletions, int changes, String repoFullName, long repoId) {
         this.sha = sha;
-        this.branch = branch;
+        //this.branch = branch;
         this.time = time;
         this.authorName = authorName;
         this.authorId = authorId;
@@ -56,8 +58,9 @@ public class Commit {
     public String getSha() { return sha; }
     public void setSha(String sha) { this.sha = sha; }
 
-    public String getBranch() { return branch; }
-    public void setBranch(String branch) { this.branch = branch; }
+
+//    public String getBranch() { return branch; }
+//    public void setBranch(String branch) { this.branch = branch; }
 
     public String getTime() { return time; }
     public void setTime(String time) { this.time = time; }
@@ -85,8 +88,10 @@ public class Commit {
 
     @Override
     public String toString() {
-        return "Branch [sha=" + sha + ", branch=" + branch + ", time=" + time + ", authorName=" + authorName +
+        return "Commit [sha=" + sha + ", time=" + time + ", authorName=" + authorName +
                 ", authorId=" + authorId + ", additions=" + additions + ", deletions=" + deletions +
                 ", changes=" + changes + ", repoFullName=" + repoFullName + ", repoId=" + repoId + "]";
+                //+ ", branch=" + branch
     }
+    
 }
