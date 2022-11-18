@@ -1,32 +1,18 @@
 package com.group10.softwareengineeringmetrics.api;
 
-import com.fasterxml.jackson.databind.deser.impl.NullsConstantProvider;
-import com.group10.softwareengineeringmetrics.models.Repository;
-import com.group10.softwareengineeringmetrics.models.User;
-import org.hibernate.engine.spi.ManagedEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @RestController
 public class RepositoryControllerAPI {
 
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
-
+    @Lazy
     @Autowired
-    private RestTemplate restTemplate = restTemplate();
+    private RestTemplate restTemplate;
 
     private String git_api_url = "https://api.github.com";
 
