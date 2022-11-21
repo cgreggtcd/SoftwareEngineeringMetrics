@@ -13,10 +13,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DatabaseApiController {
@@ -45,15 +47,21 @@ public class DatabaseApiController {
 
     // This initialises a repository object then calls a function to initialise all the commits from the repo.
     // This should also then initialise branches, pull requests, and users that are relevant, but currently these api elements have not been implemented.
-    public boolean initialiseFromRepo(){
-        System.out.println("Initialising repo");
-        ResponseEntity<String> response = repositoryControllerAPI.getRepo("cgreggtcd", "SoftwareEngineeringMetrics");
+    public boolean initialiseFromRepo(String username, String repoName){
+        ResponseEntity<String> response = repositoryControllerAPI.getRepo(username, repoName);
         byte[] resultBytes = response.getBody().getBytes();
         try {
             JSONObject resultJSON = (JSONObject) parser.parse(resultBytes);
             String full_name = (String) resultJSON.get("full_name");
             String name = (String) resultJSON.get("name");
             long id = ((Number) resultJSON.get("id")).longValue();
+
+            Optional<Repository> repository = repositoryRepository.findById(id);
+
+            // If the repository is already there
+            if (repository.isPresent()) {
+                return true;
+            }
             Repository newRepo = new Repository(id, full_name);
             repositoryRepository.save(newRepo);
             // Will need to add users based on repo here!
@@ -113,6 +121,17 @@ public class DatabaseApiController {
         List<Commit> commits = new ArrayList<>();
         commits.addAll(commitRepository.findAll());
         return commits;
+    }
+
+    @Transactional
+    public void clearRepositoryReferences(String repoFullName){
+        Repository repo = repositoryRepository.findByFullName(repoFullName);
+        long id = repo.getId();
+        branchRepository.deleteAllByRepoId(id);
+        commitRepository.deleteAllByRepoId(id);
+        pullRequestRepository.deleteAllByRepoId(id);
+        userRepository.deleteAllByRepoId(id);
+        repositoryRepository.deleteById(id);
     }
 
 

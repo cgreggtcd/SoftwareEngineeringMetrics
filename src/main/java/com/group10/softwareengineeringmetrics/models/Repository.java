@@ -1,7 +1,6 @@
 package com.group10.softwareengineeringmetrics.models;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "repositories")
@@ -9,8 +8,8 @@ public class Repository {
     @Id
     private long id;
 
-    @Column(name="full_name")
-    private String full_name;
+    @Column(name="fullName")
+    private String fullName;
 
     //private List<Branch> branches;
     //private List<String> languages;
@@ -23,7 +22,7 @@ public class Repository {
     }
 
     public Repository(long id, String full_name){
-        this.full_name = full_name;
+        this.fullName = full_name;
         this.id = id;
     }
 
@@ -31,12 +30,12 @@ public class Repository {
         return id;
     }
 
-    public String getName() {
-        return full_name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setName(String name) {
-        this.full_name = name;
+    public void setFullName(String name) {
+        this.fullName = name;
     }
     
     //public User getOwner() { return owner; }
@@ -50,6 +49,6 @@ public class Repository {
 
     @Override
     public String toString() {
-        return "Repository [id=" + id + ", name=" + full_name + "]";
+        return "Repository [id=" + id + ", name=" + fullName + "]";
     }
 }
