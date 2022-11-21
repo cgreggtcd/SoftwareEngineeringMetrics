@@ -12,7 +12,7 @@ public class RepositoryControllerAPI {
 
     @Lazy
     @Autowired
-    private RestTemplate restTemplate;
+    private RestTemplate restTemplate = new RestTemplate();
 
     private String git_api_url = "https://api.github.com";
 

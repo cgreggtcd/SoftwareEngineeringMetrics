@@ -1,8 +1,10 @@
 package com.group10.softwareengineeringmetrics;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.group10.softwareengineeringmetrics.api.BranchControllerAPI;
 import com.group10.softwareengineeringmetrics.api.CommitControllerAPI;
 import com.group10.softwareengineeringmetrics.api.RepositoryControllerAPI;
+import com.group10.softwareengineeringmetrics.models.Branch;
 import com.group10.softwareengineeringmetrics.models.Commit;
 import com.group10.softwareengineeringmetrics.models.Repository;
 import com.group10.softwareengineeringmetrics.models.User;
@@ -29,6 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class APITests {
     RepositoryControllerAPI repoAPI = new RepositoryControllerAPI();
     CommitControllerAPI commitsAPI = new CommitControllerAPI();
+    BranchControllerAPI branchAPI = new BranchControllerAPI();
     JSONParser parser = new JSONParser();
 
     @Test
@@ -152,9 +155,10 @@ public class APITests {
 
 
     //TODO: Test get commits for branch
+    @Test
     public void testGetBranchCommits() throws ParseException, IOException {
         ResponseEntity<Object []> response = commitsAPI.getCommitsForBranch("cgreggtcd", "SoftwareEngineeringMetrics",
-                "api");
+                "main");
         Object[] responseBody = response.getBody();
 
         ArrayList<Commit> commitsInThisBranch = new ArrayList<>();
@@ -204,6 +208,33 @@ public class APITests {
         }
 
         assertEquals(200, response.getStatusCode().value());
+    }
+
+    //TODO: Test get commits for branch
+    @Test
+    public void testGetBranches() throws ParseException, IOException {
+        ResponseEntity<String> response = repoAPI.getRepo("cgreggtcd", "SoftwareEngineeringMetrics" );
+        //System.out.println(response.toString());
+        byte[] resultBytes = response.getBody().getBytes();
+        JSONObject resultJSON = (JSONObject) parser.parse(resultBytes);
+
+        String newRepoName = (String) resultJSON.get("name");
+        //String newRepoVisibility= (String) resultJSON.get("visibility");
+        Integer id = (Integer) resultJSON.get("id");
+        long idLong = (long) id;
+
+
+        ResponseEntity<Object[]> responseBranches = branchAPI.getBranches("cgreggtcd", "SoftwareEngineeringMetrics");
+        Object[] responseBody = responseBranches.getBody();
+        ArrayList<Branch> branchesInThisRepo = new ArrayList<>();
+
+        for(int i = 0; i < responseBody.length; i++) {
+            HashMap<String, String> o1 = (HashMap<String, String>) responseBody[i];
+            String name = o1.get("name");
+            Branch currentBranch = new Branch(name, newRepoName, idLong);
+            branchesInThisRepo.add(currentBranch);
+        }
+            assertEquals(200, response.getStatusCode().value());
     }
 
 
