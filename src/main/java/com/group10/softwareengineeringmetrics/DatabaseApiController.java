@@ -53,7 +53,7 @@ public class DatabaseApiController {
             JSONObject resultJSON = (JSONObject) parser.parse(resultBytes);
             String full_name = (String) resultJSON.get("full_name");
             String name = (String) resultJSON.get("name");
-            long id = (long) resultJSON.get("id");
+            long id = ((Number) resultJSON.get("id")).longValue();
             Repository newRepo = new Repository(id, full_name);
             repositoryRepository.save(newRepo);
             // Will need to add users based on repo here!
@@ -81,7 +81,13 @@ public class DatabaseApiController {
             HashMap<String, String> authorHashMap = (HashMap<String, String>) author;
             String authorName = authorHashMap.get("name");
             String time = authorHashMap.get("date");
-            long authorId = Long.parseLong(authorHashMap.get("id"));
+            long authorId;
+            if (authorHashMap.get("id") == null){
+                authorId = -1;
+            }
+            else {
+                authorId = Long.parseLong((String) authorHashMap.get("id"));
+            }
             try {
                 // Get changes
                 ResponseEntity<String> specificCommit = commitControllerAPI.getSpecificCommit("cgreggtcd", "SoftwareEngineeringMetrics", sha);

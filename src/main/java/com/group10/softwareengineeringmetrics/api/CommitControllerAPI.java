@@ -3,12 +3,13 @@ package com.group10.softwareengineeringmetrics.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-@RestController
+@Component
 public class CommitControllerAPI {
 
     @Autowired
@@ -26,7 +27,7 @@ public class CommitControllerAPI {
 
          **THIS METHOD ONLY GETS THE COMMITS TO THE MAIN BRANCH OF THE REPO**
      */
-    @RequestMapping(value = "/main", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    //@RequestMapping(value = "/main", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object []> getCommitsForRepo(String username, String repoName)  {
         ResponseEntity<Object []> response = restTemplate.getForEntity(git_api_url + "/repos/" + username + "/" + repoName
                 + "/commits", Object[].class);
@@ -42,7 +43,7 @@ public class CommitControllerAPI {
                   String repoName (name of the repository you wish to get commits for)
                   String sha (sha of the commit, this can be found in the url of the commit, or also through the API)
      */
-    @RequestMapping(value = "/specific", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    //@RequestMapping(value = "/specific", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSpecificCommit(String username, String repoName, String sha) {
         ResponseEntity<String> response = restTemplate.getForEntity(git_api_url + "/repos/" + username + "/" + repoName
                 + "/commits/" + sha, String.class);
