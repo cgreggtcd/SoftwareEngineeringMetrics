@@ -18,6 +18,7 @@ public class RepositoryControllerAPI {
 
     @RequestMapping (method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getRepo (String username, String repoName)  {
+        System.out.println("Initialising repo");
         ResponseEntity<String> response =
                 restTemplate.getForEntity(String.format(git_api_url + "/repos/" + username + "/" + repoName), String.class);
         response.toString();
