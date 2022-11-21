@@ -1,1 +1,2 @@
-CALL mvnw clean install spring-boot:run
+CALL docker-compose build
+CALL docker-compose up
