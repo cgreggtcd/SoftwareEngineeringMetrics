@@ -41,6 +41,8 @@ public class Commit {
     @Column(name="repoId")
     private long repoId;
 
+    public Commit(){}
+
     public Commit(String sha, String time, String authorName, long authorId, int additions,
                   int deletions, int changes, String repoFullName, long repoId) {
         this.sha = sha;
