@@ -2,8 +2,7 @@ package com.group10.softwareengineeringmetrics.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -19,9 +18,11 @@ public class RepositoryControllerAPI {
 
     //@RequestMapping (method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getRepo (String username, String repoName)  {
-        System.out.println("Initialising repo");
-        ResponseEntity<String> response =
-                restTemplate.getForEntity(String.format(git_api_url + "/repos/" + username + "/" + repoName), String.class);
+        String url = git_api_url + "/repos/" + username + "/" + repoName;
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization","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");
+        HttpEntity<Void> entity =  new HttpEntity<>(headers);
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
         return response;
     }
 }
