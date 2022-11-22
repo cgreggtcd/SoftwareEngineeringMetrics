@@ -1,8 +1,7 @@
 package com.group10.softwareengineeringmetrics.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,8 +28,9 @@ public class CommitControllerAPI {
      */
     //@RequestMapping(value = "/main", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object []> getCommitsForRepo(String username, String repoName)  {
-        ResponseEntity<Object []> response = restTemplate.getForEntity(git_api_url + "/repos/" + username + "/" + repoName
-                + "/commits", Object[].class);
+        String url = git_api_url + "/repos/" + username + "/" + repoName + "/commits";
+        HttpEntity<Void> entity = getAuthorizationHeaderEntity();
+        ResponseEntity<Object []> response = restTemplate.exchange(url, HttpMethod.GET, entity, Object[].class);
         return response;
     }
 
@@ -45,9 +45,9 @@ public class CommitControllerAPI {
      */
     //@RequestMapping(value = "/specific", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSpecificCommit(String username, String repoName, String sha) {
-        ResponseEntity<String> response = restTemplate.getForEntity(git_api_url + "/repos/" + username + "/" + repoName
-                + "/commits/" + sha, String.class);
-        response.toString();
+        String url = git_api_url + "/repos/" + username + "/" + repoName + "/commits/" + sha;
+        HttpEntity<Void> entity = getAuthorizationHeaderEntity();
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
         return response;
     }
 
@@ -60,12 +60,20 @@ public class CommitControllerAPI {
                   String repoName (name of the repository you wish to get commits for)
                   String branchName (name of the branch name they wish to get commits for)
      */
-    @RequestMapping(value = "/branch", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    //@RequestMapping(value = "/branch", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object []> getCommitsForBranch(String username, String repoName, String branchName) {
         //https://api.github.com/repos/cgreggtcd/SoftwareEngineeringMetrics/commits?sha=api
-        ResponseEntity<Object []> repsonse = restTemplate.getForEntity(git_api_url + "/repos/" + username + "/" + repoName
-                + "/commits?sha=" + branchName, Object[].class );
-        return repsonse;
+        String url = git_api_url + "/repos/" + username + "/" + repoName + "/commits?sha=" + branchName;
+        HttpEntity<Void> entity = getAuthorizationHeaderEntity();
+        ResponseEntity<Object []> response = restTemplate.exchange(url, HttpMethod.GET, entity, Object[].class );
+        return response;
     }
+
+    private HttpEntity<Void> getAuthorizationHeaderEntity(){
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization","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");
+        return new HttpEntity<>(headers);
+    }
+
 
 }
