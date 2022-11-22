@@ -1,6 +1,7 @@
 package com.group10.softwareengineeringmetrics.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,9 @@ public class CommitControllerAPI {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Value("${github.access.token}")
+    private String githubAccessToken;
 
     private String git_api_url = "https://api.github.com";
 
@@ -71,7 +75,7 @@ public class CommitControllerAPI {
 
     private HttpEntity<Void> getAuthorizationHeaderEntity(){
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization","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");
+        headers.set("Authorization",githubAccessToken);
         return new HttpEntity<>(headers);
     }
 
