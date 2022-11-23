@@ -24,7 +24,7 @@ jobs:
         path: src/main/resources/application.properties
         write-mode: overwrite
         contents: |
-          github.access.token=${ACCESS_TOKEN}
+          github.access.token=${{ secrets.ACCESS_TOKEN }}
     
     - name: Build with Maven
       run: mvn test
