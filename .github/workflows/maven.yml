@@ -21,7 +21,7 @@ jobs:
     - name: Write application properties (Github API key)
       uses: DamianReeves/write-file-action@master
       with:
-        path: ${{env.home}}/src/main/resources/application.properties
+        path: src/main/resources/application.properties
         write-mode: overwrite
         contents: |
           github.access.token=${ACCESS_TOKEN}
