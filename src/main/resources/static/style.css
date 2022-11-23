@@ -123,10 +123,14 @@ interface navigation h1 {
 
 .value{
     padding: 30px 30px 0px 30px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .value .val-box{
-background: white;
+    background: #3B3B3B;
     width: 235px;
     padding: 16px 20px;
     border-radius: 5px;
@@ -172,8 +176,8 @@ interface navigation search input{
 }
 
 chart{
-    width: 800px;
-    padding: 60px 100px;
+    width: 1200px;
+    padding: 60px 200px;
     border-radius: 500px;
     display: flex;
     justify-content: flex-start;
@@ -182,13 +186,33 @@ chart{
 
 chart .box{
     background: #3B3B3B;
-    width: 800px;
-    padding: 55px 75px;
+    width: 1200px;
+    padding: 55px 110px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+chart2{
+    width: 1200px;
+    padding: 60px 200px;
     border-radius: 5px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
 }
+
+chart2 .box{
+    background: #3B3B3B;
+    width: 1200px;
+    padding: 55px 110px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 
 interface navigation search i{
     margin-right: 14px;
