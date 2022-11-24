@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface CommitRepository extends JpaRepository<Commit, Long> {
+    void deleteAllByRepoId(Long repoId);
     List<Commit> findByAuthorName(String authorName);
     List<Commit> findByAuthorId(long authorId);
 }
