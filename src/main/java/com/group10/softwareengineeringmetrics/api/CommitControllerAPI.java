@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 public class CommitControllerAPI {
 
     @Autowired
-    private RestTemplate restTemplate;
+    private RestTemplate restTemplate = new RestTemplate();
 
     @Value("${github.access.token}")
     private String githubAccessToken;

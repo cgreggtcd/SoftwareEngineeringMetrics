@@ -14,7 +14,7 @@ public class RepositoryControllerAPI {
 
     @Lazy
     @Autowired
-    private RestTemplate restTemplate;
+    private RestTemplate restTemplate = new RestTemplate();
 
     @Value("${github.access.token}")
     private String githubAccessToken;
