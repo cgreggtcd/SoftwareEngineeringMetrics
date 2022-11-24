@@ -1,10 +1,7 @@
 package com.group10.softwareengineeringmetrics;
 
 import com.group10.softwareengineeringmetrics.api.*;
-import com.group10.softwareengineeringmetrics.models.Branch;
-import com.group10.softwareengineeringmetrics.models.Commit;
-import com.group10.softwareengineeringmetrics.models.Repository;
-import com.group10.softwareengineeringmetrics.models.User;
+import com.group10.softwareengineeringmetrics.models.*;
 import com.group10.softwareengineeringmetrics.repository.*;
 import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
@@ -83,8 +80,9 @@ public class DatabaseApiController {
             boolean validUsers = addUsersFromRepo(username, name, full_name, id);
             List<Branch> branches = initialiseAllBranchesFromRepo(username, name, full_name, id);
             boolean validBranches = branches != null;
+            boolean validPullRequests = initialisePullRequestsFromRepo(username, name, full_name, id);
 
-            return initialiseAllCommitsFromRepo(username,name, full_name, id, branches);
+            return validUsers & validBranches & validPullRequests & initialiseAllCommitsFromRepo(username,name, full_name, id, branches);
         } catch (ParseException e) {
             System.err.println("Repository Result is invalid");
             return false;
@@ -107,6 +105,35 @@ public class DatabaseApiController {
             branchRepository.save(currentBranch);
         }
         return listOfBranches;
+    }
+
+    public boolean initialisePullRequestsFromRepo(String ownerName, String repositoryName, String repositoryFullName, long repositoryId){
+        ResponseEntity<Object []> pulls = pullRequestControllerAPI.getPulls(ownerName, repositoryName);
+        Object[] responseBody = pulls.getBody();
+
+        if (responseBody == null) {
+            return false;
+        }
+        for (Object pull : responseBody) {
+            HashMap<String, Object> hashPull = (HashMap<String, Object>) pull;
+            long id = ((Number) hashPull.get("id")).longValue();
+            String state = (String) hashPull.get("state");
+            String createdAt = (String) hashPull.get("created_at");
+
+            String closedAt = (String) hashPull.get("closed_at");
+            Object branchFromObject = hashPull.get("head");
+            HashMap<String, String> hashBranchFrom = (HashMap<String, String>) branchFromObject;
+            String branchFrom = hashBranchFrom.get("label");
+
+            Object branchToObject = hashPull.get("base");
+            HashMap<String, String> hashBranchTo = (HashMap<String, String>) branchToObject;
+            String branchTo = hashBranchFrom.get("label");
+
+            PullRequest pullRequest = new PullRequest(id, state, repositoryFullName, repositoryId,
+                    createdAt, closedAt, branchFrom, branchTo);
+            pullRequestRepository.save(pullRequest);
+        }
+        return true;
     }
 
     public boolean addUsersFromRepo(String ownerName, String repositoryName, String repositoryFullName, long repositoryId){
@@ -208,6 +235,10 @@ public class DatabaseApiController {
     @Transactional
     public void clearRepositoryReferences(String repoFullName){
         Repository repo = repositoryRepository.findByFullName(repoFullName);
+
+        if (repo == null){
+            return;
+        }
         long id = repo.getId();
         branchRepository.deleteAllByRepoId(id);
         commitRepository.deleteAllByRepoId(id);
