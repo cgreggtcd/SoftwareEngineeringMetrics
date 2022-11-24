@@ -3,11 +3,9 @@ package com.group10.softwareengineeringmetrics;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.group10.softwareengineeringmetrics.api.BranchControllerAPI;
 import com.group10.softwareengineeringmetrics.api.CommitControllerAPI;
+import com.group10.softwareengineeringmetrics.api.PullRequestControllerAPI;
 import com.group10.softwareengineeringmetrics.api.RepositoryControllerAPI;
-import com.group10.softwareengineeringmetrics.models.Branch;
-import com.group10.softwareengineeringmetrics.models.Commit;
-import com.group10.softwareengineeringmetrics.models.Repository;
-import com.group10.softwareengineeringmetrics.models.User;
+import com.group10.softwareengineeringmetrics.models.*;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
@@ -32,6 +30,7 @@ public class APITests {
     RepositoryControllerAPI repoAPI = new RepositoryControllerAPI();
     CommitControllerAPI commitsAPI = new CommitControllerAPI();
     BranchControllerAPI branchAPI = new BranchControllerAPI();
+    PullRequestControllerAPI prAPI = new PullRequestControllerAPI();
     JSONParser parser = new JSONParser();
 
     @Test
@@ -235,6 +234,51 @@ public class APITests {
             branchesInThisRepo.add(currentBranch);
         }
             assertEquals(200, response.getStatusCode().value());
+    }
+
+    @Test
+    public void testGetPullRequests() throws ParseException {
+        ResponseEntity<Object[]> response = prAPI.getPulls("cgreggtcd", "SoftwareEngineeringMEtrics" );
+        Object[] responseBody = response.getBody();
+
+        ArrayList<PullRequest> PRsInThisRepo = new ArrayList<>();
+
+        for(int i = 0; i < responseBody.length; i++)
+        {
+            HashMap<String, Object> o1 = (HashMap<String, Object>) responseBody[i];
+
+            //Getting sha, time, authorName
+            //Long id = (Long) o1.get("id");
+            Integer id = (Integer) o1.get("id");
+            Long idLong = Long.parseLong(String.valueOf(id));
+            String state = (String) o1.get("state");
+            String createdAt = (String) o1.get("created_at");
+            String closedAt = (String) o1.get("closed_at");
+
+            Object head = o1.get("head");
+            HashMap<String, String> headHashMap = (HashMap<String, String>) head;
+            String branchFrom = headHashMap.get("label");
+
+            Object base = o1.get("base");
+            HashMap<String, String> baseHashMap = (HashMap<String, String>) base;
+            String branchTo = headHashMap.get("label");
+
+
+            //getting repo id
+            ResponseEntity<String> responseRepo = repoAPI.getRepo("cgreggtcd", "SoftwareEngineeringMetrics" );
+            byte[] resultBytes = responseRepo.getBody().getBytes();
+            JSONObject resultJSON = (JSONObject) parser.parse(resultBytes);
+            Integer idRepo = (Integer) resultJSON.get("id");
+            long repoId = (long) idRepo;
+
+            //make PR object
+            PullRequest currentPR = new PullRequest(idLong, state, "SoftwareEngineeringMetrics", repoId, createdAt,
+                    closedAt, branchFrom, branchTo);
+
+            PRsInThisRepo.add(currentPR);
+        }
+
+        assertEquals(200, response.getStatusCode().value());
     }
 
 
