@@ -6,6 +6,9 @@ import javax.persistence.*;
 @Table(name = "branches")
 public class Branch {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
     @Column(name="name")
     private String name;
 
@@ -15,13 +18,19 @@ public class Branch {
     @Column(name="repoId")
     private long repoId;
 
-    public Branch() {}
+    public Branch() {
+        this.name = "error";
+        this.repoFullName = "errorreponame";
+        this.repoId = 9999;
+    }
 
     public Branch(String name, String repoFullName, long repo_id){
         this.name = name;
         this.repoFullName = repoFullName;
         this.repoId = repo_id;
     }
+
+    public long getId() { return id; }
 
     public String getName() {
         return name;

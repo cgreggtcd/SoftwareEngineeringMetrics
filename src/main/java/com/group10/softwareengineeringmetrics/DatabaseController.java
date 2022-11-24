@@ -1,6 +1,8 @@
 package com.group10.softwareengineeringmetrics;
 
+import com.group10.softwareengineeringmetrics.models.Branch;
 import com.group10.softwareengineeringmetrics.models.Commit;
+import com.group10.softwareengineeringmetrics.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,5 +50,15 @@ public class DatabaseController {
     public ResponseEntity<List<Commit>> getCommits(){
         List<Commit> commits = databaseApiController.getCommits();
         return new ResponseEntity<>(commits, HttpStatus.OK);
+    }
+    @GetMapping("/get-branches")
+    public ResponseEntity<List<Branch>> getBranches(){
+        List<Branch> branches = databaseApiController.getBranches();
+        return new ResponseEntity<>(branches, HttpStatus.OK);
+    }
+    @GetMapping("/get-users")
+    public ResponseEntity<List<User>> getUsers(){
+        List<User> users = databaseApiController.getUsers();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 }
