@@ -1,9 +1,10 @@
 package com.group10.softwareengineeringmetrics;
 
-import com.group10.softwareengineeringmetrics.api.CommitControllerAPI;
-import com.group10.softwareengineeringmetrics.api.RepositoryControllerAPI;
+import com.group10.softwareengineeringmetrics.api.*;
+import com.group10.softwareengineeringmetrics.models.Branch;
 import com.group10.softwareengineeringmetrics.models.Commit;
 import com.group10.softwareengineeringmetrics.models.Repository;
+import com.group10.softwareengineeringmetrics.models.User;
 import com.group10.softwareengineeringmetrics.repository.*;
 import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
@@ -43,6 +44,15 @@ public class DatabaseApiController {
     @Autowired
     CommitControllerAPI commitControllerAPI;
 
+    @Autowired
+    UserControllerAPI userControllerAPI;
+
+    @Autowired
+    BranchControllerAPI branchControllerAPI;
+
+    @Autowired
+    PullRequestControllerAPI pullRequestControllerAPI;
+
     JSONParser parser = new JSONParser();
 
     // This initialises a repository object then calls a function to initialise all the commits from the repo.
@@ -64,27 +74,86 @@ public class DatabaseApiController {
             }
             Repository newRepo = new Repository(id, full_name);
             repositoryRepository.save(newRepo);
-            // Will need to add users based on repo here!
-            return initialiseAllCommitsFromRepo("cgreggtcd",name, full_name,id);
+
+            // Add default branch (might want to change branch entity to store whether or not a branch is the default)
+            String defaultBranchName = (String) resultJSON.get("default_branch");
+            Branch defaultBranch = new Branch(defaultBranchName, full_name, id);
+            branchRepository.save(defaultBranch);
+
+            boolean validUsers = addUsersFromRepo(username, name, full_name, id);
+            List<Branch> branches = initialiseAllBranchesFromRepo(username, name, full_name, id);
+            boolean validBranches = branches != null;
+
+            return initialiseAllCommitsFromRepo(username,name, full_name, id, branches);
         } catch (ParseException e) {
             System.err.println("Repository Result is invalid");
             return false;
         }
     }
 
-    // Currently this only initialises commits in the main branch of a repo as the api interaction for branches has not been implemented
-    public boolean initialiseAllCommitsFromRepo(String ownerName, String repositoryName, String repositoryFullName, long repositoryId) {
-        ResponseEntity<Object []> response = commitControllerAPI.getCommitsForRepo(ownerName, repositoryName);
-        Object[] responseBody = response.getBody();
+    public List<Branch> initialiseAllBranchesFromRepo(String ownerName, String repositoryName, String repositoryFullName, long repositoryId){
+        ResponseEntity<Object []> branches = branchControllerAPI.getBranches(ownerName, repositoryName);
+        Object[] responseBody = branches.getBody();
+        List<Branch> listOfBranches = new ArrayList<>();
 
-        for (Object o : responseBody) {
+        if (responseBody == null) {
+            return null;
+        }
+        for (Object branch : responseBody){
+            HashMap<String, String> hashBranch = (HashMap<String, String>) branch;
+            String branchName = hashBranch.get("name");
+            Branch currentBranch = new Branch(branchName, repositoryFullName, repositoryId);
+            listOfBranches.add(currentBranch);
+            branchRepository.save(currentBranch);
+        }
+        return listOfBranches;
+    }
+
+    public boolean addUsersFromRepo(String ownerName, String repositoryName, String repositoryFullName, long repositoryId){
+        ResponseEntity<Object []> collaborators = userControllerAPI.getUserNames(ownerName, repositoryName);
+        Object[] responseBody = collaborators.getBody();
+
+        if (responseBody != null) {
+            for (Object user : responseBody) {
+                HashMap<String, Object> hashUser = (HashMap<String, Object>) user;
+                String userName = (String)hashUser.get("login");
+                long userId = ((Number) hashUser.get("id")).longValue();
+                User currentUser = new User(userId, userName, repositoryFullName, repositoryId);
+                userRepository.save(currentUser);
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean initialiseAllCommitsFromRepo(String ownerName, String repositoryName, String repositoryFullName, long repositoryId, List<Branch> branches) {
+        boolean validBranches = initialiseCommitsFromBranch(ownerName, repositoryName, repositoryFullName, repositoryId, "");
+        for (Branch branch : branches){
+            String branchName = branch.getName();
+            if (!initialiseCommitsFromBranch(ownerName, repositoryName, repositoryFullName, repositoryId, branchName)){
+                validBranches = false;
+            }
+        }
+        return validBranches;
+    }
+
+    public boolean initialiseCommitsFromBranch(String ownerName, String repositoryName, String repositoryFullName, long repositoryId, String branch){
+        ResponseEntity<Object []> response;
+        // Default branch
+        if (branch.equals("")) {
+            response = commitControllerAPI.getCommitsForRepo(ownerName, repositoryName);
+        } else {
+            response = commitControllerAPI.getCommitsForBranch(ownerName, repositoryName, branch);
+        }
+        for (Object o : response.getBody()) {
             HashMap<String, String> o1 = (HashMap<String, String>) o;
 
             // Get sha, author name, author id and time of commit
             String sha = o1.get("sha");
             try {
                 // Get changes
-                ResponseEntity<String> specificCommit = commitControllerAPI.getSpecificCommit("cgreggtcd", "SoftwareEngineeringMetrics", sha);
+                ResponseEntity<String> specificCommit = commitControllerAPI.getSpecificCommit(ownerName, repositoryName, sha);
                 byte[] resultBytesCommit = specificCommit.getBody().getBytes();
                 JSONObject resultJSONCommit = (JSONObject) parser.parse(resultBytesCommit);
 
@@ -115,12 +184,25 @@ public class DatabaseApiController {
             }
         }
         return true;
+
     }
+
+
 
     public List<Commit> getCommits(){
         List<Commit> commits = new ArrayList<>();
         commits.addAll(commitRepository.findAll());
         return commits;
+    }
+    public List<Branch> getBranches(){
+        List<Branch> branches = new ArrayList<>();
+        branches.addAll(branchRepository.findAll());
+        return branches;
+    }
+    public List<User> getUsers(){
+        List<User> users = new ArrayList<>();
+        users.addAll(userRepository.findAll());
+        return users;
     }
 
     @Transactional
