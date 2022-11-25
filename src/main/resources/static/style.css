@@ -5,7 +5,7 @@ padding: 0;
     box-sizing: border-box;
 }
 body{
-    font-family: montserrat;
+    font-family: "Source Sans Pro", Helvetica,Montserrat,"Source Sans 3";
     width: 100%;
     background: #121212;
     position: relative;
@@ -109,7 +109,7 @@ interface navigation{
 
 interface navigation h1 {
     color: white;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Source Sans Pro", Helvetica,Montserrat,"Source Sans 3";
 }
 
 .i-name{
@@ -117,7 +117,8 @@ interface navigation h1 {
     padding: 30px 30px 0px 30px;
     font-size: 35px;
     background-color: #121212;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Source Sans Pro", Helvetica,Montserrat,"Source Sans 3";
+
 
 }
 
@@ -125,29 +126,28 @@ interface navigation h1 {
     padding: 30px 30px 0px 30px;
     display:flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: start;
     flex-wrap: wrap;
 }
 
+
 .value .val-box{
+    font-size: 60px;
     background: #3B3B3B;
-    width: 235px;
+    width: 270px;
+    height: 138px;
     padding: 16px 20px;
     border-radius: 5px;
     display: flex;
     justify-content: flex-start;
-    align-items: center;
+    align-items: left;
 }
 
 .value .val-box i{
     font-size: 25px;
-    width: 60px;
-    height: 60px;
-    line-height: 60px;
     border-radius: 50%;
     text-align: center;
     color: white;
-    background: dodgerblue;
     margin-right: 15px;
 }
 
@@ -172,7 +172,7 @@ interface navigation search input{
 
 .value .val-box span{
     font-size: 15px;
-    color: #828997;
+    color: white;
 }
 
 chart{
