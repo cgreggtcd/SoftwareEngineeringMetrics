@@ -5,9 +5,9 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "dev", "database-api" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main","dev", "database-api" ]
 
 jobs:
   build:
@@ -18,5 +18,13 @@ jobs:
     - uses: actions/setup-java@v1
       with:
         java-version: 17
+    - name: Write application properties (Github API key)
+      uses: DamianReeves/write-file-action@master
+      with:
+        path: src/main/resources/application.properties
+        write-mode: overwrite
+        contents: |
+          github.access.token=${{ secrets.ACCESS_TOKEN }}
+    
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn test
