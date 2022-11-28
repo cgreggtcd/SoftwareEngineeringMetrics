@@ -17,7 +17,7 @@ public class Burnout {
      *  The authors are ranked from most to least likely to burnout:
      *  [0] = most likely, [4] = least likely.
      */
-    String[] getBurnoutAuthors(){
+    public String[] getBurnoutAuthors(){
         String[] authorOfCommit = getAuthorOfCommit();
         String[] timeOfCommit = getTimeOfCommit();
         Map<String,Integer> pointsPerAuthor = getPointsPerAuthor(authorOfCommit, timeOfCommit);

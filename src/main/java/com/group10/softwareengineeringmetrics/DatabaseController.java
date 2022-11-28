@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -17,6 +18,7 @@ import java.util.List;
 public class DatabaseController {
     @Autowired
     DatabaseApiController databaseApiController;
+    Burnout burnout;
 
     @GetMapping("/init-repo/{user}/{reponame}")
     public ResponseEntity<HttpStatus> initialiseDatabaseWithStandardRepo(@PathVariable("user") String user, @PathVariable("reponame") String repoName){
@@ -60,5 +62,12 @@ public class DatabaseController {
     public ResponseEntity<List<User>> getUsers(){
         List<User> users = databaseApiController.getUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @GetMapping("/test-burnout")
+    public ResponseEntity<List<String>> getBurnout(){
+        burnout = new Burnout();
+        List<String> topAuthors = Arrays.asList(burnout.getBurnoutAuthors());
+        return new ResponseEntity<>(topAuthors, HttpStatus.OK);
     }
 }
