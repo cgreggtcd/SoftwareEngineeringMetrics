@@ -1,7 +1,6 @@
 package com.group10.softwareengineeringmetrics;
 
 import com.group10.softwareengineeringmetrics.models.Commit;
-
 import java.util.List;
 
 public class TimeOfCommit {
