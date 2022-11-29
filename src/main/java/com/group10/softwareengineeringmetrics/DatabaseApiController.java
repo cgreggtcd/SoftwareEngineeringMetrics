@@ -235,7 +235,6 @@ public class DatabaseApiController {
     @Transactional
     public void clearRepositoryReferences(String repoFullName){
         Repository repo = repositoryRepository.findByFullName(repoFullName);
-
         if (repo == null){
             return;
         }

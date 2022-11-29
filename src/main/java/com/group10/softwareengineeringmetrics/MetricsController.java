@@ -1,23 +1,24 @@
 package com.group10.softwareengineeringmetrics;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
 public class MetricsController {
     @Autowired
     DatabaseApiController databaseApiController;
+    Burnout burnout;
 
     @RequestMapping("/metrics")
-    public String findNumberOfCommits(Model model){
+    public String initialiseDataForFrontend(Model model){
+        databaseApiController.initialiseFromRepo("cgreggtcd", "SoftwareEngineeringMetrics");
         int commitCount = databaseApiController.getCommits().size();
         model.addAttribute("commitCount", commitCount);
+        burnout = new Burnout(databaseApiController);
+        String[] burnoutAuthors = burnout.getBurnoutAuthors();
+        model.addAttribute("burnoutAuthors", burnoutAuthors);
         return "metrics";
     }
 }
