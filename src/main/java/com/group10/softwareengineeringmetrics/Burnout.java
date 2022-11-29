@@ -1,14 +1,21 @@
 package com.group10.softwareengineeringmetrics;
 
 import com.group10.softwareengineeringmetrics.models.Commit;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Burnout {
-    DatabaseController dbcontroller = new DatabaseController();
-    List<Commit> commits = (List<Commit>) dbcontroller.getCommits();
+    DatabaseApiController databaseApiController;
+    List<Commit> commits;
+
+    public Burnout(DatabaseApiController databaseApiController){
+        this.databaseApiController = databaseApiController;
+         commits = databaseApiController.getCommits();
+    }
 
     /*
      *  This function returns an array of up to 5 authors.

@@ -66,7 +66,7 @@ public class DatabaseController {
 
     @GetMapping("/test-burnout")
     public ResponseEntity<List<String>> getBurnout(){
-        burnout = new Burnout();
+        burnout = new Burnout(databaseApiController);
         List<String> topAuthors = Arrays.asList(burnout.getBurnoutAuthors());
         return new ResponseEntity<>(topAuthors, HttpStatus.OK);
     }
