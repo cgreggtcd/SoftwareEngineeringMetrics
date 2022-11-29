@@ -369,6 +369,7 @@
       <div>   
         <span>Deployment Frequency</span>
         <h3 style="color: white"> 1.4 days</h3>
+
       </div>
     </div>
 
@@ -390,7 +391,7 @@
     <div class="val-box"> 
       <div>
         <span>Deployment Failure Rate</span>
-        <h3 style="color: white">16%</h3>
+        <h3 style="color: white" th:text="${name}"/>
       </div>
     </div>
   </div>
@@ -399,8 +400,11 @@
     <div class="box">
     <canvas id="myChart" width="400" height="400"></canvas>
   <script>
+    
     const ctx = document.getElementById('myChart').getContext('2d');
+    
     const myChart = new Chart(ctx, {
+      
       type: 'line',
       data: {
         labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
@@ -411,6 +415,8 @@
           backgroundColor: ['rgba(10,105,105,0.82)',],
           borderColor: ['rgb(75, 192, 192)',],
           borderWidth: 1
+          
+       
         }]
       },
       options: {
@@ -437,14 +443,24 @@
     <div class="box">
       <canvas id="myChart2" width="400" height="400"></canvas>
       <script>
+       
+    
+        var x = [[${commitCount}]];
+        var author0 = "[[${burnoutAuthors[0]}]]";
+        var author1 = "[[${burnoutAuthors[1]}]]";
+        var author2 = "[[${burnoutAuthors[2]}]]";
+        var author3 = "[[${burnoutAuthors[3]}]]";
+        var author4 = "[[${burnoutAuthors[4]}]]";
+        
+        
         const ctx2 = document.getElementById('myChart2').getContext('2d');
         const myChart2 = new Chart(ctx2, {
           type: 'bar',
           data: {
-            labels: [${burnoutAuthors}],
+            labels: [author0, author1, author2, author3, author4],
             datasets: [{
-              label: 'elements',
-              data: [12, 19, 3, 5, 2, 3],
+              label: 'Burn Out',
+              data: [10, 2, 4, 12, 7],
               backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -477,6 +493,7 @@
       </script>
     </div>
   </chart2>
+  
 
 </interface>
 
