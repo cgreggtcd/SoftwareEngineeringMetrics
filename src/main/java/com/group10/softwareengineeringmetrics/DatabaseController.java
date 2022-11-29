@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -19,6 +21,8 @@ public class DatabaseController {
     @Autowired
     DatabaseApiController databaseApiController;
     Burnout burnout;
+    TimeOfCommit toc;
+    WorkBreakdown workBreakdown;
 
     @GetMapping("/init-repo/{user}/{reponame}")
     public ResponseEntity<HttpStatus> initialiseDatabaseWithStandardRepo(@PathVariable("user") String user, @PathVariable("reponame") String repoName){
@@ -69,5 +73,19 @@ public class DatabaseController {
         burnout = new Burnout(databaseApiController);
         List<String> topAuthors = Arrays.asList(burnout.getBurnoutAuthors());
         return new ResponseEntity<>(topAuthors, HttpStatus.OK);
+    }
+
+    @GetMapping("/test-timeOfCommits")
+    public ResponseEntity<HashMap<String, ArrayList<String>>> getTimeOfCommits(){
+        toc = new TimeOfCommit(databaseApiController);
+        HashMap<String, ArrayList<String>> times = toc.getTimeOfCommits();
+        return new ResponseEntity<>(times, HttpStatus.OK);
+    }
+
+    @GetMapping("/test-workBreakdown")
+    public ResponseEntity<HashMap<String, int[]>> getWorkBreakdown(){
+        workBreakdown = new WorkBreakdown(databaseApiController);
+        HashMap<String, int[]> breakdown = workBreakdown.getWorkBreakdownData();
+        return new ResponseEntity<>(breakdown, HttpStatus.OK);
     }
 }
