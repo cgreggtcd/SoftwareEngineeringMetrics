@@ -16,9 +16,13 @@ public class MetricsController {
         databaseApiController.initialiseFromRepo("cgreggtcd", "SoftwareEngineeringMetrics");
         int commitCount = databaseApiController.getCommits().size();
         model.addAttribute("commitCount", commitCount);
+
         burnout = new Burnout(databaseApiController);
         String[] burnoutAuthors = burnout.getBurnoutAuthors();
         model.addAttribute("burnoutAuthors", burnoutAuthors);
+
+        
+    
         return "metrics";
     }
 }
