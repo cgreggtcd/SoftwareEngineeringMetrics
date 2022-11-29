@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
   <link rel="stylesheet" href="style.css">
   <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 </head>
 <body>
 <section id ="menu">
@@ -15,12 +16,12 @@
     <h2 style="color: white">Metrics Dashboard</h2>
   </div>
   <div class = "item">
-    <li><i class="fas fa-cat"></i><a href = "#">Dashboard</a></li>
-    <li><i class="fa fa-truck"></i></i><a href = "#"></a><input type="button" value="Deliver" onclick="location.href = 'page.html';"></li>
-    <li><i class="fa fa-play"></i><a href = "#">Measurement</a></li>
-    <li><i class="fab fa-github"></i><a href = "#">Github</a></li>
-    <li><i class="fa fa-pen"></i><a href = "#">Edit</a></li>
-    <li><i class="fa fa-chart-line"></i><a href = "#">Table</a></li>
+    <li onclick="location.href = 'index.html';"> <i class="fas fa-cat"></i><a href="#">Dashboard</a></li>
+    <li onclick="location.href = 'teammembers.html';"> <i class="fa fa-users"></i><a href="#">Team Members</a></li>
+    <li onclick="location.href = 'teammembers.html';"> <i class="fa fa-play"></i><a href="#">Measurement</a></li>
+    <li onclick="location.href = 'teammembers.html';"> <i class="fab fa-github"></i><a href="#">GitHub</a></li>
+    <li onclick="location.href = 'teammembers.html';"> <i class="fa fa-pen"></i><a href="#">Edit</a></li>
+    <li onclick="location.href = 'teammembers.html';"> <i class="fa fa-chart-line"></i><a href="#">Table</a></li>
   </div>
   </nav>
 </section>
@@ -28,8 +29,7 @@
   <navigation>
     <n1>
       <div>
-              <i id="menu-btn" class="fas fa-bars">
-              </i>
+              <i id="menu-btn" class="fas fa-bars"></i>
       </div>
       <search>
         <i class="fa fa-search">
@@ -37,7 +37,7 @@
         </i>
       </search>
     </n1>
-    <h1> SWENG METRICS</h1>
+    <h1 style="color: #1E984E">SWENG METRICS</h1>
   </navigation>
    
   <h3 class="i-name"> Team Overview</h3> 
@@ -48,14 +48,120 @@
  
   <div class="value">
     <div class="val-box">
-      <i class="fas fa-users"></i>
+      <div>   
+        <span>Deployment Frequency</span>
+        <h3 style="color: white"> 1.4 days</h3>
+      </div>
+    </div>
+
+
+    <div class="val-box">   
       <div>
-        <h3>9,600</h3>
-        <span>Online Users</span>
+        <span>Total Commits</span>
+         <h3 style="color: white">82</h3>
+      </div>
+    </div>
+
+    <div class="val-box"> 
+      <div>
+        <span>Unit Test Coverage</span>
+        <h3 style="color: white">73%</h3>
+      </div>
+    </div>
+
+    <div class="val-box"> 
+      <div>
+        <span>Deployment Failure Rate</span>
+        <h3 style="color: white">16%</h3>
       </div>
     </div>
   </div>
+
+  <chart>
+    <div class="box">
+    <canvas id="myChart" width="400" height="400"></canvas>
+  <script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        datasets: [{
+          label: 'Activity Heatmap',
+          data: [12, 19, 3, 5, 2, 3, 30],
+          fill: true,
+          backgroundColor: ['rgba(10,105,105,0.82)',],
+          borderColor: ['rgb(75, 192, 192)',],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            grid: {
+              color: 'DarkGray',
+            },
+            beginAtZero: true
+          },
+          x: {
+            grid: {
+              color: 'DarkGray'
+            }
+          },
+        }
+      }
+    });
+  </script>
+    </div>
+  </chart>
+
+  <chart2>
+    <div class="box">
+      <canvas id="myChart2" width="400" height="400"></canvas>
+      <script>
+        const ctx2 = document.getElementById('myChart2').getContext('2d');
+        const myChart2 = new Chart(ctx2, {
+          type: 'bar',
+          data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+              label: 'elements',
+              data: [12, 19, 3, 5, 2, 3],
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              },
+              x: {
+              }
+            }
+          }
+        });
+      </script>
+    </div>
+  </chart2>
+
 </interface>
+
 <script>
   $('#menu-btn').click(function (){
     $('#menu').toggleClass("active");

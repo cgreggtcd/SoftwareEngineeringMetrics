@@ -5,7 +5,7 @@ padding: 0;
     box-sizing: border-box;
 }
 body{
-    font-family: montserrat;
+    font-family: "Source Sans Pro", Helvetica,Montserrat,"Source Sans 3";
     width: 100%;
     background: #121212;
     position: relative;
@@ -51,8 +51,9 @@ nav .logo{
 
 nav li{
     list-style: none;
-    padding: 15px 0;
+    padding: 15px;
     transition: all .3s;
+    display: block;
 }
 
 nav li:hover{
@@ -70,7 +71,7 @@ nav li i{
     height: 30px;
     line-height: 30px;
     text-align: center;
-    front-size: 14px;
+    font-size: 14px;
     margin: 0 10px 0 25px;
 }
 
@@ -108,7 +109,7 @@ interface navigation{
 
 interface navigation h1 {
     color: white;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Source Sans Pro", Helvetica,Montserrat,"Source Sans 3";
 }
 
 .i-name{
@@ -116,33 +117,37 @@ interface navigation h1 {
     padding: 30px 30px 0px 30px;
     font-size: 35px;
     background-color: #121212;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Source Sans Pro", Helvetica,Montserrat,"Source Sans 3";
+
 
 }
 
 .value{
     padding: 30px 30px 0px 30px;
+    display:flex;
+    justify-content: space-between;
+    align-items: start;
+    flex-wrap: wrap;
 }
 
+
 .value .val-box{
-background: white;
-    width: 235px;
+    font-size: 60px;
+    background: #3B3B3B;
+    width: 270px;
+    height: 138px;
     padding: 16px 20px;
     border-radius: 5px;
     display: flex;
     justify-content: flex-start;
-    align-items: center;
+    align-items: left;
 }
 
 .value .val-box i{
     font-size: 25px;
-    width: 60px;
-    height: 60px;
-    line-height: 60px;
     border-radius: 50%;
     text-align: center;
     color: white;
-    background: dodgerblue;
     margin-right: 15px;
 }
 
@@ -167,8 +172,47 @@ interface navigation search input{
 
 .value .val-box span{
     font-size: 15px;
-    color: #828997;
+    color: white;
 }
+
+chart{
+    width: 1200px;
+    padding: 60px 200px;
+    border-radius: 500px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+chart .box{
+    background: #3B3B3B;
+    width: 1200px;
+    padding: 55px 110px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+chart2{
+    width: 1200px;
+    padding: 60px 200px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+chart2 .box{
+    background: #3B3B3B;
+    width: 1200px;
+    padding: 55px 110px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 
 interface navigation search i{
     margin-right: 14px;
