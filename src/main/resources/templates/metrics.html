@@ -215,6 +215,24 @@
     align-items: center;
   }
 
+  chart3{
+    width: 1200px;
+    padding: 60px 200px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  chart3 .box{
+    background: #3B3B3B;
+    width: 1200px;
+    padding: 55px 110px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
 
   interface navigation search i{
     margin-right: 14px;
@@ -493,7 +511,55 @@
       </script>
     </div>
   </chart2>
-  
+
+  <chart3>
+    <div class="box">
+      <canvas id="myChart3" width="400" height="400"></canvas>
+      <script>
+
+
+        var x = [[${commitCount}]];
+        var author0 = "[[${burnoutAuthors[0]}]]";
+        var author1 = "[[${burnoutAuthors[1]}]]";
+        var author2 = "[[${burnoutAuthors[2]}]]";
+        var author3 = "[[${burnoutAuthors[3]}]]";
+        var author4 = "[[${burnoutAuthors[4]}]]";
+
+
+        const ctx3 = document.getElementById('myChart3').getContext('2d');
+        const myChart3 = new Chart(ctx3, {
+          type: 'pie',
+          data: {
+            labels: [author0, author1, author2, author3, author4],
+            datasets: [{
+              label: 'Burn Out',
+              data: [10, 2, 4, 12, 7],
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+          }
+        });
+      </script>
+    </div>
+  </chart3>
+
 
 </interface>
 
