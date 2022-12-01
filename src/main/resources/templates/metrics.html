@@ -257,6 +257,25 @@
     align-items: center;
   }
 
+  chart0{
+    width: 1200px;
+    padding: 60px 200px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  chart0 .box{
+    background: #3B3B3B;
+    width: 1200px;
+    padding: 55px 110px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
   interface navigation search i{
     margin-right: 14px;
   }
@@ -440,6 +459,60 @@
     </div>
   </div>
 
+  <chart0>
+    <div class="box">
+      <canvas id="myChart0" width="400" height="400"></canvas>
+      <script>
+
+        const ctx0 = document.getElementById('myChart0').getContext('2d');
+
+        Chart.defaults.color = '#FFFFFF';
+        const myChart0 = new Chart(ctx0, {
+
+
+          type: 'line',
+          data: {
+            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            datasets: [{
+              color: '#FFFFFF',
+              label : 'Total Team Commits',
+              data: [39, 52, 43, 39, 23, 5, 3],
+              fill: true,
+              backgroundColor: ['rgba(10,105,105,0.82)',],
+              borderColor: ['rgb(75, 192, 192)',],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            plugins: {
+              title: {
+                display: true,
+                text: 'Team Commits',
+                font: {
+                  size: 25
+                }
+              }
+            },
+            scales: {
+              y: {
+                grid: {
+                  color: 'White',
+                },
+                beginAtZero: true
+              },
+              x: {
+                grid: {
+                  color: 'White'
+                }
+              },
+            }
+
+          }
+        });
+      </script>
+    </div>
+  </chart0>
+
   <chart>
     <div class="box">
     <canvas id="myChart" width="400" height="400"></canvas>
@@ -456,14 +529,22 @@
         labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
         datasets: [{
           color: '#FFFFFF',
-          label : 'Total Team Commits',
+          label : 'Additions',
           data: [39, 52, 43, 39, 23, 5, 3],
-          fill: true,
+          fill: false,
           backgroundColor: ['rgba(10,105,105,0.82)',],
           borderColor: ['rgb(75, 192, 192)',],
           borderWidth: 1
-          
-        }]
+        },
+          {
+            color: '#FFFFFF',
+            label : 'Deletions',
+            data: [1, 2, 3, 4, 5, 6, 7],
+            fill: false,
+            backgroundColor: ['rgba(255, 99, 132, 0.2)',],
+            borderColor: ['rgba(255, 99, 132, 1)',],
+            borderWidth: 1
+          }]
       },
       options: {
         plugins: {
@@ -477,15 +558,9 @@
       },
         scales: {
           y: {
-            grid: {
-              color: 'White',
-            },
             beginAtZero: true
           },
           x: {
-            grid: {
-              color: 'White'
-            }
           },
         }
         

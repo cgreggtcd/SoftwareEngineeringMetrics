@@ -232,6 +232,25 @@ chart3 .box{
     align-items: center;
 }
 
+chart0{
+    width: 1200px;
+    padding: 60px 200px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+chart0 .box{
+    background: #3B3B3B;
+    width: 1200px;
+    padding: 55px 110px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 interface navigation search i{
     margin-right: 14px;
 }
