@@ -27,11 +27,11 @@ public class MetricsController {
         model.addAttribute("burnoutAuthors", burnoutAuthors);
 
         timeOfCommit = new TimeOfCommit(databaseApiController);
-        HashMap<String, ArrayList<String>> timesOfCommits = timeOfCommit.getTimeOfCommits();
+        String[][] timesOfCommits = timeOfCommit.getTimeOfCommits();
         model.addAttribute("timesOfCommits", timesOfCommits);
 
         workBreakdown = new WorkBreakdown(databaseApiController);
-        HashMap<String, int[]> breakdownOfWork = workBreakdown.getWorkBreakdownData();
+        int[][] breakdownOfWork = workBreakdown.getWorkBreakdownData();
         model.addAttribute("breakdownOfWork", breakdownOfWork);
     
         return "metrics";
