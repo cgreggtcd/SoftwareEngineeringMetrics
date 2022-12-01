@@ -88,6 +88,7 @@ public class Commit {
     public long getRepoId() { return repoId; }
     public void setRepoId(long repoId) { this.repoId = repoId; }
 
+
     @Override
     public String toString() {
         return "Commit [sha=" + sha + ", time=" + time + ", authorName=" + authorName +

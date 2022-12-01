@@ -2,6 +2,7 @@ package com.group10.softwareengineeringmetrics;
 
 import com.group10.softwareengineeringmetrics.models.Commit;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,29 +21,45 @@ public class TimeOfCommit {
             String key is author name
             ArrayList<String> is in the format: [timeOfCommit1, timeOfCommit2 ... timeOfCommitN]
      */
-    HashMap<String, ArrayList<String>> getTimeOfCommits () {
-        HashMap<String, ArrayList<String>> timeOfCommitsData = new HashMap<>();
+    String[][] getTimeOfCommits () {
+        ArrayList<ArrayList<String>> timeOfCommitsData = new ArrayList<>();
 
         for(int i = 0; i < commits.size(); i++)
         {
             //Author name
             String author = commits.get(i).getAuthorName();
-
-            if(timeOfCommitsData.containsKey(author))
-            //if data for this contributor already exists
+            Boolean updated = false;
+            for(int j = 0; j < timeOfCommitsData.size(); j++)
             {
-                ArrayList<String> timeOfCommits = timeOfCommitsData.get(author);
-                timeOfCommits.add(commits.get(i).getTime());
+                List<String> innerArray = timeOfCommitsData.get(j);
+                //if the author already exists in the arraylist
+                if(innerArray.get(0).equalsIgnoreCase(author))
+                {
+                    innerArray.add(commits.get(i).getTime());
+                    updated = true;
+                }
             }
-            else
-            //if this is the first time the contributor has come up
+            //this is the first time we are seeing this author
+            if(!updated)
             {
-                ArrayList<String> timeOfCommits = new ArrayList<>();
-                timeOfCommits.add(commits.get(i).getTime());
-                timeOfCommitsData.put(author, timeOfCommits);
+                ArrayList<String> innerArray = new ArrayList<>();
+                innerArray.add(0,author);
+                innerArray.add(commits.get(i).getTime());
+                timeOfCommitsData.add(innerArray);
             }
         }
-        return timeOfCommitsData;
+
+        String[][] toreturn = new String[timeOfCommitsData.size()][];
+        for(int i = 0; i < timeOfCommitsData.size(); i++)
+        {
+            String[] times = new String[timeOfCommitsData.get(i).size()];
+            for(int j = 0; j < timeOfCommitsData.get(i).size(); j++)
+            {
+                times[j] = timeOfCommitsData.get(i).get(j);
+            }
+            toreturn[i] = times;
+        }
+        return toreturn;
     }
 
 }

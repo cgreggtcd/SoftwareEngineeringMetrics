@@ -75,17 +75,24 @@ public class DatabaseController {
         return new ResponseEntity<>(topAuthors, HttpStatus.OK);
     }
 
+    @GetMapping("/test-breakdown")
+    public ResponseEntity<int[][]> getBreakdown(){
+        workBreakdown = new WorkBreakdown(databaseApiController);
+        int[][] data = workBreakdown.getWorkBreakdownData();
+        return new ResponseEntity<>(data, HttpStatus.OK);
+    }
+
     @GetMapping("/test-timeOfCommits")
-    public ResponseEntity<HashMap<String, ArrayList<String>>> getTimeOfCommits(){
+    public ResponseEntity<String[][]> getTimeOfCommits(){
         toc = new TimeOfCommit(databaseApiController);
-        HashMap<String, ArrayList<String>> times = toc.getTimeOfCommits();
+        String[][] times = toc.getTimeOfCommits();
         return new ResponseEntity<>(times, HttpStatus.OK);
     }
 
-    @GetMapping("/test-workBreakdown")
-    public ResponseEntity<HashMap<String, int[]>> getWorkBreakdown(){
-        workBreakdown = new WorkBreakdown(databaseApiController);
-        HashMap<String, int[]> breakdown = workBreakdown.getWorkBreakdownData();
-        return new ResponseEntity<>(breakdown, HttpStatus.OK);
-    }
+//    @GetMapping("/test-workBreakdown")
+//    public ResponseEntity<HashMap<String, int[]>> getWorkBreakdown(){
+//        workBreakdown = new WorkBreakdown(databaseApiController);
+//        HashMap<String, int[]> breakdown = workBreakdown.getWorkBreakdownData();
+//        return new ResponseEntity<>(breakdown, HttpStatus.OK);
+//    }
 }
