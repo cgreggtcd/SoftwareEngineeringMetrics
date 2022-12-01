@@ -111,6 +111,7 @@
 
   interface navigation h1 {
     color: white;
+    text-shadow: 5px 5px rgba(0, 0, 0, 0.75);
     font-family: "Source Sans Pro", Helvetica,Montserrat,"Source Sans 3";
   }
 
@@ -136,13 +137,14 @@
   .value .val-box{
     font-size: 60px;
     background: #3B3B3B;
-    width: 270px;
+    width: 300px;
     height: 138px;
     padding: 16px 20px;
     border-radius: 5px;
     display: flex;
     justify-content: flex-start;
     align-items: left;
+    box-shadow:  0px 5px 5px rgba(0, 0, 0, 0.75);
   }
 
   .value .val-box i{
@@ -158,23 +160,44 @@
     justify-content: flex-start;
     align-items: center;
     padding: 10px 14px;
-    boarder: 1px solid #fff;
+    border: 1px solid #fff;
     border-radius: 4px;
   }
 
   interface navigation search input{
-    boarder: none;
+    border: none;
     outline: none;
     font-size: 14px;
   }
 
   .value .val-box h3{
+    position: relative;
+    top: -15px;
+    text-align: left;
+    line-height: 1.3;
+    font-weight: 600;
     font-size: 18px;
+
   }
 
   .value .val-box span{
-    font-size: 15px;
+    position: relative;
+    top: -30px;
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.3;
     color: white;
+    text-shadow: 0px 5px 5px rgba(0, 0, 0, 0.75);
+  }
+
+  .value .val-box diff{
+    position: relative;
+    top: -15px;
+    color:rgba(255, 255, 255, 0.5);;
+    font-size: 16px;
+    line-height: 1.3;
+    font-weight: 400;
+    text-shadow: 0px 5px 5px rgba(0, 0, 0, 0.75);
   }
 
   chart{
@@ -387,7 +410,7 @@
       <div>   
         <span>Deployment Frequency</span>
         <h3 style="color: white"> 1.4 days</h3>
-
+        <diff> -25% </diff>
       </div>
     </div>
 
@@ -396,6 +419,7 @@
       <div>
         <span>Total Commits</span>
          <h3 style="color: white" th:text="${commitCount}"/>
+         <diff> -15% vs Last Week </diff>
       </div>
     </div>
 
@@ -403,6 +427,7 @@
       <div>
         <span>Unit Test Coverage</span>
         <h3 style="color: white">73%</h3>
+        <diff> -8% </diff>
       </div>
     </div>
 
@@ -410,6 +435,7 @@
       <div>
         <span>Deployment Failure Rate</span>
         <h3 style="color: white" th:text="${name}"/>
+        <diff> +8% </diff>
       </div>
     </div>
   </div>
@@ -421,36 +447,48 @@
     
     const ctx = document.getElementById('myChart').getContext('2d');
     
+    Chart.defaults.color = '#FFFFFF';
     const myChart = new Chart(ctx, {
+
       
       type: 'line',
       data: {
         labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
         datasets: [{
-          label: 'Activity Heatmap',
-          data: [12, 19, 3, 5, 2, 3, 30],
+          color: '#FFFFFF',
+          label : 'Total Team Commits',
+          data: [39, 52, 43, 39, 23, 5, 3],
           fill: true,
           backgroundColor: ['rgba(10,105,105,0.82)',],
           borderColor: ['rgb(75, 192, 192)',],
           borderWidth: 1
           
-       
         }]
       },
       options: {
+        plugins: {
+            title: {
+                display: true,
+                text: 'Team Commits',
+                font: {
+                        size: 25
+                    }
+            }
+      },
         scales: {
           y: {
             grid: {
-              color: 'DarkGray',
+              color: 'White',
             },
             beginAtZero: true
           },
           x: {
             grid: {
-              color: 'DarkGray'
+              color: 'White'
             }
           },
         }
+        
       }
     });
   </script>
@@ -499,6 +537,15 @@
             }]
           },
           options: {
+            plugins: {
+            title: {
+                display: true,
+                text: 'Team Burnout Index',
+                font: {
+                        size: 25
+                    }
+            }
+      },
             scales: {
               y: {
                 beginAtZero: true
@@ -554,6 +601,15 @@
             }]
           },
           options: {
+            plugins: {
+            title: {
+                display: true,
+                text: 'Overall Work Breakdown',
+                font: {
+                        size: 25
+                    }
+            }
+      },
           }
         });
       </script>
