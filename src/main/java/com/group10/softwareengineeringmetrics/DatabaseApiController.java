@@ -14,10 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class DatabaseApiController {
@@ -235,6 +232,47 @@ public class DatabaseApiController {
         List<User> users = new ArrayList<>();
         users.addAll(userRepository.findAll());
         return users;
+    }
+
+    public List<List<String>> getCommitsByUsers(){
+        ArrayList<ArrayList<String>> timeOfCommitsData = new ArrayList<>();
+        HashMap<String, List<Commit>> authorToCommits = new HashMap<>();
+        List<Commit> commits = getCommits();
+
+        for (Commit commit : commits) {
+            //Author name
+            String author = commit.getAuthorName();
+            if (!authorToCommits.containsKey(author)) {
+                authorToCommits.put(author, new ArrayList<>());
+            }
+            List<Commit> authCommits = authorToCommits.get(author);
+            authCommits.add(commit);
+            authorToCommits.put(author, authCommits);
+        }
+        List<List<String>> output = new ArrayList<>();
+        for (String authorName: authorToCommits.keySet()){
+            List<Commit> authorCommits = getCommitsByUser(authorName);
+            String numberOfCommits = Integer.toString(authorCommits.size());
+            int additions = 0;
+            int changes = 0;
+            int deletions = 0;
+            for (Commit commit : authorCommits){
+                additions += commit.getAdditions();
+                changes += commit.getChanges();
+                deletions += commit.getDeletions();
+            }
+            List<String> usersString = new ArrayList<>(Arrays.asList(authorName, numberOfCommits,
+                    Integer.toString(additions), Integer.toString(changes), Integer.toString(deletions)));
+            output.add(usersString);
+
+        }
+        return output;
+    }
+
+    public List<Commit> getCommitsByUser(String name){
+        List<Commit> commits = new ArrayList<>();
+        commits.addAll(commitRepository.findByAuthorName(name));
+        return commits;
     }
 
     @Transactional

@@ -89,11 +89,17 @@ public class DatabaseController {
         return new ResponseEntity<>(times, HttpStatus.OK);
     }
 
+
     @GetMapping("/test-timeBreakdown")
-    public ResponseEntity<String[][]> getTimeBreakdown(){
+    public ResponseEntity<String[][]> getTimeBreakdown() {
         toc = new TimeOfCommit(databaseApiController);
         String[][] times = toc.getTimeBreakdown();
         return new ResponseEntity<>(times, HttpStatus.OK);
+    }
+    @GetMapping("/test-commits")
+    public ResponseEntity<List<List<String>>> getUserCommits(){
+        List<List<String>> output = databaseApiController.getCommitsByUsers();
+        return new ResponseEntity<>(output, HttpStatus.OK);
     }
 
 //    @GetMapping("/test-workBreakdown")
