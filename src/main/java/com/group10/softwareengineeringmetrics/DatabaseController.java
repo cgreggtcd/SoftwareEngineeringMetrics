@@ -89,6 +89,13 @@ public class DatabaseController {
         return new ResponseEntity<>(times, HttpStatus.OK);
     }
 
+    @GetMapping("/test-timeBreakdown")
+    public ResponseEntity<String[][]> getTimeBreakdown(){
+        toc = new TimeOfCommit(databaseApiController);
+        String[][] times = toc.getTimeBreakdown();
+        return new ResponseEntity<>(times, HttpStatus.OK);
+    }
+
 //    @GetMapping("/test-workBreakdown")
 //    public ResponseEntity<HashMap<String, int[]>> getWorkBreakdown(){
 //        workBreakdown = new WorkBreakdown(databaseApiController);
