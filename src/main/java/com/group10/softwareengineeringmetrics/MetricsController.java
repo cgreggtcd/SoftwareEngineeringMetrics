@@ -33,6 +33,9 @@ public class MetricsController {
         workBreakdown = new WorkBreakdown(databaseApiController);
         int[][] breakdownOfWork = workBreakdown.getWorkBreakdownData();
         model.addAttribute("breakdownOfWork", breakdownOfWork);
+
+        String[][] timeBreakdown = timeOfCommit.getTimeBreakdown();
+        model.addAttribute("timeBreakDown", timeBreakdown);
     
         return "metrics";
     }
