@@ -84,11 +84,19 @@ public class TimeOfCommit {
                 {
                     timeBreakdown[i][index] = "1";
                 }
-
             }
-
         }
 
+        for(int i = 0; i < timeBreakdown.length; i++)
+        {
+            for(int j = 1; j < timeBreakdown[i].length; j++)
+            {
+                if(timeBreakdown[i][j] == null || timeBreakdown[i][j].equalsIgnoreCase("null"))
+                {
+                    timeBreakdown[i][j] = String.valueOf(0);
+                }
+            }
+        }
         return timeBreakdown;
     }
 
