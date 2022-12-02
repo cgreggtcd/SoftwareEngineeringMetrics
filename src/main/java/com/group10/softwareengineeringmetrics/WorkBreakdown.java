@@ -54,7 +54,7 @@ public class WorkBreakdown {
             LocalDate to = getdate(time);
             int day = Math.abs ((int) ChronoUnit.DAYS.between(from, to));
             //additions
-            if(day <= 7 && day >= 0)
+            if(day < 7 && day >= 0)
             {
                 int[] addtions = workBreakdownData[0];
                 addtions[day] += commits.get(i).getAdditions();
