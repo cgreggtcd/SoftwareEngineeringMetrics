@@ -1,71 +1,71 @@
 * {
-margin: 0;
-padding: 0;
+    margin: 0;
+    padding: 0;
     list-style: none;
     box-sizing: border-box;
-}
-body{
+  }
+  body{
     font-family: "Source Sans Pro", Helvetica,Montserrat,"Source Sans 3";
     width: 100%;
     background: #121212;
     position: relative;
     display: flex;
-}
+  }
 
-.center{
+  .center{
     top: 50%;
     left: 50%;
     width: 400px;
     border-radius: 10px;
-}
+  }
 
-.center h1{
+  .center h1{
     text-align: center;
     padding: 0 0 20px 0;
     border-bottom: 1px solid silver;
-}
+  }
 
-#menu{
-background: #3B3B3B;
-width: 300px;
-height: 100%;
+  #menu{
+    background: #3B3B3B;
+    width: 300px;
+    height: 100%;
     position: fixed;
     top: 0;
     left: 0;
-}
+  }
 
-nav img{
-width: 20%;
-}
+  nav img{
+    width: 20%;
+  }
 
-nav .logo{
+  nav .logo{
     display: flex;
     align-items: center;
     color: #fff;
     padding: 30px 0 0 30px;
-}
+  }
 
-#menu .logo img{
+  #menu .logo img{
     margin-right: 15px;
-}
+  }
 
-nav li{
+  nav li{
     list-style: none;
     padding: 15px;
     transition: all .3s;
     display: block;
-}
+  }
 
-nav li:hover{
+  nav li:hover{
     background: #253047;
     cursor: pointer;
-}
+  }
 
-nav li:nth-child(1){
+  nav li:nth-child(1){
     border-left: 4px solid #ffffff;
-}
+  }
 
-nav li i{
+  nav li i{
     color: rgb(134,141,151);
     width: 30px;
     height: 30px;
@@ -73,46 +73,47 @@ nav li i{
     text-align: center;
     font-size: 14px;
     margin: 0 10px 0 25px;
-}
+  }
 
-nav li:hover i,
-nav li:hover a
-{
-color: #F3F4F6;
-}
+  nav li:hover i,
+  nav li:hover a
+  {
+    color: #F3F4F6;
+  }
 
-nav li a {
+  nav li a {
     text-decoration: none;
     color: rgb(134,141,151);
     transition: all .3s;
-}
+  }
 
-interface{
+  interface{
     width: calc(100% - 300px);
     margin-left: 300px;
     position: relative;
-}
+  }
 
-n1{
+  n1{
     display: flex;
     justify-content: flex-start;
     align-items: center;
-}
+  }
 
-interface navigation{
+  interface navigation{
     display: flex;
     align-items: center;
     background: #3B3B3B;
     padding: 15px 30px;
     width: calc(100% - 300px);
-}
+  }
 
-interface navigation h1 {
+  interface navigation h1 {
     color: white;
+    text-shadow: 5px 5px rgba(0, 0, 0, 0.75);
     font-family: "Source Sans Pro", Helvetica,Montserrat,"Source Sans 3";
-}
+  }
 
-.i-name{
+  .i-name{
     color: white;
     padding: 30px 30px 0px 30px;
     font-size: 35px;
@@ -120,71 +121,93 @@ interface navigation h1 {
     font-family: "Source Sans Pro", Helvetica,Montserrat,"Source Sans 3";
 
 
-}
+  }
 
-.value{
+  .value{
     padding: 30px 30px 0px 30px;
     display:flex;
     justify-content: space-between;
     align-items: start;
     flex-wrap: wrap;
-}
+  }
 
 
-.value .val-box{
+  .value .val-box{
     font-size: 60px;
     background: #3B3B3B;
-    width: 270px;
+    width: 300px;
     height: 138px;
     padding: 16px 20px;
     border-radius: 5px;
     display: flex;
     justify-content: flex-start;
     align-items: left;
-}
+    box-shadow:  0px 5px 5px rgba(0, 0, 0, 0.75);
+  }
 
-.value .val-box i{
+  .value .val-box i{
     font-size: 25px;
     border-radius: 50%;
     text-align: center;
     color: white;
     margin-right: 15px;
-}
+  }
 
-interface navigation search{
+  interface navigation search{
     display: flex;
     justify-content: flex-start;
     align-items: center;
     padding: 10px 14px;
-    boarder: 1px solid #fff;
+    border: 1px solid #fff;
     border-radius: 4px;
-}
+  }
 
-interface navigation search input{
-    boarder: none;
+  interface navigation search input{
+    border: none;
     outline: none;
     font-size: 14px;
-}
+  }
 
-.value .val-box h3{
+  .value .val-box h3{
+    position: relative;
+    top: -15px;
+    text-align: left;
+    line-height: 1.3;
+    font-weight: 600;
     font-size: 18px;
-}
 
-.value .val-box span{
-    font-size: 15px;
+  }
+
+  .value .val-box span{
+    position: relative;
+    top: -30px;
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.3;
     color: white;
-}
+    text-shadow: 0px 5px 5px rgba(0, 0, 0, 0.75);
+  }
 
-chart{
+  .value .val-box diff{
+    position: relative;
+    top: -15px;
+    color:rgba(255, 255, 255, 0.5);;
+    font-size: 16px;
+    line-height: 1.3;
+    font-weight: 400;
+    text-shadow: 0px 5px 5px rgba(0, 0, 0, 0.75);
+  }
+
+  chart{
     width: 1200px;
     padding: 60px 200px;
     border-radius: 500px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-}
+  }
 
-chart .box{
+  chart .box{
     background: #3B3B3B;
     width: 1200px;
     padding: 55px 110px;
@@ -192,18 +215,18 @@ chart .box{
     display: flex;
     justify-content: flex-start;
     align-items: center;
-}
+  }
 
-chart2{
+  chart2{
     width: 1200px;
     padding: 60px 200px;
     border-radius: 5px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-}
+  }
 
-chart2 .box{
+  chart2 .box{
     background: #3B3B3B;
     width: 1200px;
     padding: 55px 110px;
@@ -211,18 +234,18 @@ chart2 .box{
     display: flex;
     justify-content: flex-start;
     align-items: center;
-}
+  }
 
-chart3{
+  chart3{
     width: 1200px;
     padding: 60px 200px;
     border-radius: 5px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-}
+  }
 
-chart3 .box{
+  chart3 .box{
     background: #3B3B3B;
     width: 1200px;
     padding: 55px 110px;
@@ -230,18 +253,18 @@ chart3 .box{
     display: flex;
     justify-content: flex-start;
     align-items: center;
-}
+  }
 
-chart0{
+  chart0{
     width: 1200px;
     padding: 60px 200px;
     border-radius: 5px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-}
+  }
 
-chart0 .box{
+  chart0 .box{
     background: #3B3B3B;
     width: 1200px;
     padding: 55px 110px;
@@ -249,53 +272,53 @@ chart0 .box{
     display: flex;
     justify-content: flex-start;
     align-items: center;
-}
+  }
 
-interface navigation search i{
+  interface navigation search i{
     margin-right: 14px;
-}
+  }
 
-#menu-btn{
+  #menu-btn{
     display: none;
-}
+  }
 
-@media screen {
+  @media screen {
     #menu{
-        background: #3B3B3B;
-        width: 270px;
-        position: fixed;
-        left: -270px;
-        transition: all .5s;
+      background: #3B3B3B;
+      width: 270px;
+      position: fixed;
+      left: -270px;
+      transition: all .5s;
     }
     #menu.active{
-        left: 0px;
+      left: 0px;
     }
     #menu-btn{
-        display: initial;
+      display: initial;
     }
     interface{
-        width: 100%;
-        margin-left: 0px;
-        display: inline-block;
-        transition: all .5s;
+      width: 100%;
+      margin-left: 0px;
+      display: inline-block;
+      transition: all .5s;
     }
     #menu.active~interface{
-        width: calc(100% - 270px);
-        margin-left: 270px;
-        transition: all .5s;
+      width: calc(100% - 270px);
+      margin-left: 270px;
+      transition: all .5s;
     }
     interface navigation{
-        width: 100%;
+      width: 100%;
     }
-}
-tray {
+  }
+  tray {
     margin-left: 50%;
-}
-threebuttons {
+  }
+  threebuttons {
 
 
-}
-avgprsize {
+  }
+  avgprsize {
     display: inline-block;
     width: 30%;
     outline: none;
@@ -309,23 +332,8 @@ avgprsize {
     background-color: #3B3B3B;
     color: #fff;
     margin-left: 5%;
-}
-newwork {
-    display: inline-block;
-    width: 30%;
-    outline: none;
-    cursor: pointer;
-    font-size: 16px;
-    line-height: 20px;
-    font-weight: 600;
-    border-radius: 15px;
-    padding: 30px 150px 30px 30px;
-    border: none;
-    background-color: #3B3B3B;
-    color: #fff; 
-    margin-left: 5%;
-}
-refactor {
+  }
+  newwork {
     display: inline-block;
     width: 30%;
     outline: none;
@@ -339,11 +347,26 @@ refactor {
     background-color: #3B3B3B;
     color: #fff;
     margin-left: 5%;
-}
-navSwengMetrics {
+  }
+  refactor {
+    display: inline-block;
+    width: 30%;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 600;
+    border-radius: 15px;
+    padding: 30px 150px 30px 30px;
+    border: none;
+    background-color: #3B3B3B;
+    color: #fff;
+    margin-left: 5%;
+  }
+  navSwengMetrics {
     margin-left:2%;
-}
+  }
 
-interface navigation tray {
+  interface navigation tray {
     color: white;
-}
+  }

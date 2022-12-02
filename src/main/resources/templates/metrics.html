@@ -396,7 +396,7 @@
   <div class = "item">
     <li onclick="location.href = 'index.html';"> <i class="fas fa-cat"></i><a href="#">Dashboard</a></li>
     <li onclick="location.href = 'teammembers';"> <i class="fa fa-users"></i><a href="#">Team Members</a></li>
-    <li onclick="location.href = 'teammembers';"> <i class="fa fa-play"></i><a href="#">Measurement</a></li>
+    <li onclick="location.href = 'teammembers.html';"> <i class="fa fa-play"></i><a href="#">Measurement</a></li>
     <li onclick="location.href = 'teammembers';"> <i class="fab fa-github"></i><a href="#">GitHub</a></li>
     <li onclick="location.href = 'teammembers';"> <i class="fa fa-pen"></i><a href="#">Edit</a></li>
     <li onclick="location.href = 'teammembers';"> <i class="fa fa-chart-line"></i><a href="#">Table</a></li>
@@ -463,7 +463,7 @@
     <div class="box">
       <canvas id="myChart0" width="400" height="400"></canvas>
       <script>
-
+        
         const ctx0 = document.getElementById('myChart0').getContext('2d');
 
         Chart.defaults.color = '#FFFFFF';
@@ -472,11 +472,11 @@
 
           type: 'line',
           data: {
-            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'],
             datasets: [{
               color: '#FFFFFF',
-              label : 'Total Team Commits',
-              data: [39, 52, 43, 39, 23, 5, 3],
+              label : 'Team Activity - Committing Time',
+              data: [0, 0,4,31,8,8],
               fill: true,
               backgroundColor: ['rgba(10,105,105,0.82)',],
               borderColor: ['rgb(75, 192, 192)',],
@@ -517,7 +517,9 @@
     <div class="box">
     <canvas id="myChart" width="400" height="400"></canvas>
   <script>
-    
+  
+
+
     const ctx = document.getElementById('myChart').getContext('2d');
     
     Chart.defaults.color = '#FFFFFF';
@@ -530,7 +532,7 @@
         datasets: [{
           color: '#FFFFFF',
           label : 'Additions',
-          data: [39, 52, 43, 39, 23, 5, 3],
+          data: [851,97,2497, 101, 0, 0, 1676],
           fill: false,
           backgroundColor: ['rgba(10,105,105,0.82)',],
           borderColor: ['rgb(75, 192, 192)',],
@@ -539,18 +541,32 @@
           {
             color: '#FFFFFF',
             label : 'Deletions',
-            data: [1, 2, 3, 4, 5, 6, 7],
+            data: [101, 2, 108, 4, 0, 0, 63],
             fill: false,
             backgroundColor: ['rgba(255, 99, 132, 0.2)',],
             borderColor: ['rgba(255, 99, 132, 1)',],
             borderWidth: 1
-          }]
+          },
+          {
+            color: '#4287f5',
+            label : 'Changes',
+            data: [961, 99, 2605, 105, 0, 0, 1739],
+            fill: false,
+            backgroundColor: ['rgba(0, 0, 255, 0.2)',],
+            borderColor: ['rgba(28, 98, 255, 1)',],
+            borderWidth: 1
+          }
+          
+         
+        ]
+          
+          
       },
       options: {
         plugins: {
             title: {
                 display: true,
-                text: 'Team Commits',
+                text: 'Team Activity - Last Seven Days',
                 font: {
                         size: 25
                     }
@@ -574,7 +590,7 @@
     <div class="box">
       <canvas id="myChart2" width="400" height="400"></canvas>
       <script>
-       
+      
     
         var x = [[${commitCount}]];
         var author0 = "[[${burnoutAuthors[0]}]]";
@@ -640,7 +656,7 @@
       <script>
 
 
-        var x = [[${commitCount}]];
+       
         var author0 = "[[${burnoutAuthors[0]}]]";
         var author1 = "[[${burnoutAuthors[1]}]]";
         var author2 = "[[${burnoutAuthors[2]}]]";
@@ -679,7 +695,7 @@
             plugins: {
             title: {
                 display: true,
-                text: 'Overall Work Breakdown',
+                text: 'Most Likely To Burnout',
                 font: {
                         size: 25
                     }
