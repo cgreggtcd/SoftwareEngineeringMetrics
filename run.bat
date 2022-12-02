@@ -1,0 +1,1 @@
+CALL docker compose up
