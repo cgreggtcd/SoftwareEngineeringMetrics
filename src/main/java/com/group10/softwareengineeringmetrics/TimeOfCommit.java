@@ -4,6 +4,7 @@ import com.group10.softwareengineeringmetrics.models.Commit;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -62,4 +63,30 @@ public class TimeOfCommit {
         return toreturn;
     }
 
+    String [][] getTimeBreakdown () {
+        String [][] timeOfCommits = getTimeOfCommits();
+        String [][] timeBreakdown = new String[timeOfCommits.length][5];
+
+        for(int i = 0; i < timeBreakdown.length; i++)
+        {
+            timeBreakdown[i][0] = timeOfCommits[1][0];
+            for(int j = 0; j < timeOfCommits[i].length; j++)
+            {
+                String time = timeOfCommits[i][j];
+                int index = convertTimeIndex(time);
+                timeBreakdown[i][index] += 1;
+            }
+        }
+
+        return timeBreakdown;
+    }
+
+    private Integer convertTimeIndex(String time){
+        Integer hour = Integer.parseInt(time.substring(11, 13));
+        if(hour >= 0  && hour <= 6)  return 1; // 00:00 - 05:00
+        if(hour >= 6  && hour <= 12)  return 2;  // 06:00 - 08:00
+        if(hour >= 12  && hour <= 18) return 3;  // 09:00 - 17:00
+        if(hour >= 18 && hour <= 24) return 4;  // 18:00 - 20:00
+        return -1;
+    }
 }
