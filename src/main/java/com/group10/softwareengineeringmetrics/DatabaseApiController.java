@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,36 +56,40 @@ public class DatabaseApiController {
     // This initialises a repository object then calls a function to initialise all the commits from the repo.
     // This should also then initialise branches, pull requests, and users that are relevant, but currently these api elements have not been implemented.
     public boolean initialiseFromRepo(String username, String repoName){
-        ResponseEntity<String> response = repositoryControllerAPI.getRepo(username, repoName);
-        byte[] resultBytes = response.getBody().getBytes();
         try {
-            JSONObject resultJSON = (JSONObject) parser.parse(resultBytes);
-            String full_name = (String) resultJSON.get("full_name");
-            String name = (String) resultJSON.get("name");
-            long id = ((Number) resultJSON.get("id")).longValue();
+            ResponseEntity<String> response = repositoryControllerAPI.getRepo(username, repoName);
+            byte[] resultBytes = response.getBody().getBytes();
+            try {
+                JSONObject resultJSON = (JSONObject) parser.parse(resultBytes);
+                String full_name = (String) resultJSON.get("full_name");
+                String name = (String) resultJSON.get("name");
+                long id = ((Number) resultJSON.get("id")).longValue();
 
-            Optional<Repository> repository = repositoryRepository.findById(id);
+                Optional<Repository> repository = repositoryRepository.findById(id);
 
-            // If the repository is already there
-            if (repository.isPresent()) {
-                return true;
+                // If the repository is already there
+                if (repository.isPresent()) {
+                    return true;
+                }
+                Repository newRepo = new Repository(id, full_name);
+                repositoryRepository.save(newRepo);
+
+                // Add default branch (might want to change branch entity to store whether or not a branch is the default)
+                String defaultBranchName = (String) resultJSON.get("default_branch");
+                Branch defaultBranch = new Branch(defaultBranchName, full_name, id);
+                branchRepository.save(defaultBranch);
+
+                boolean validUsers = addUsersFromRepo(username, name, full_name, id);
+                List<Branch> branches = initialiseAllBranchesFromRepo(username, name, full_name, id);
+                boolean validBranches = branches != null;
+                boolean validPullRequests = initialisePullRequestsFromRepo(username, name, full_name, id);
+
+                return validUsers & validBranches & validPullRequests & initialiseAllCommitsFromRepo(username, name, full_name, id, branches);
+            } catch (ParseException e) {
+                System.err.println("Repository Result is invalid");
+                return false;
             }
-            Repository newRepo = new Repository(id, full_name);
-            repositoryRepository.save(newRepo);
-
-            // Add default branch (might want to change branch entity to store whether or not a branch is the default)
-            String defaultBranchName = (String) resultJSON.get("default_branch");
-            Branch defaultBranch = new Branch(defaultBranchName, full_name, id);
-            branchRepository.save(defaultBranch);
-
-            boolean validUsers = addUsersFromRepo(username, name, full_name, id);
-            List<Branch> branches = initialiseAllBranchesFromRepo(username, name, full_name, id);
-            boolean validBranches = branches != null;
-            boolean validPullRequests = initialisePullRequestsFromRepo(username, name, full_name, id);
-
-            return validUsers & validBranches & validPullRequests & initialiseAllCommitsFromRepo(username,name, full_name, id, branches);
-        } catch (ParseException e) {
-            System.err.println("Repository Result is invalid");
+        } catch (HttpClientErrorException e) {
             return false;
         }
     }
