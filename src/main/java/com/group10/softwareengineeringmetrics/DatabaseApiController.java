@@ -12,11 +12,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class DatabaseApiController {
@@ -55,36 +53,40 @@ public class DatabaseApiController {
     // This initialises a repository object then calls a function to initialise all the commits from the repo.
     // This should also then initialise branches, pull requests, and users that are relevant, but currently these api elements have not been implemented.
     public boolean initialiseFromRepo(String username, String repoName){
-        ResponseEntity<String> response = repositoryControllerAPI.getRepo(username, repoName);
-        byte[] resultBytes = response.getBody().getBytes();
         try {
-            JSONObject resultJSON = (JSONObject) parser.parse(resultBytes);
-            String full_name = (String) resultJSON.get("full_name");
-            String name = (String) resultJSON.get("name");
-            long id = ((Number) resultJSON.get("id")).longValue();
+            ResponseEntity<String> response = repositoryControllerAPI.getRepo(username, repoName);
+            byte[] resultBytes = response.getBody().getBytes();
+            try {
+                JSONObject resultJSON = (JSONObject) parser.parse(resultBytes);
+                String full_name = (String) resultJSON.get("full_name");
+                String name = (String) resultJSON.get("name");
+                long id = ((Number) resultJSON.get("id")).longValue();
 
-            Optional<Repository> repository = repositoryRepository.findById(id);
+                Optional<Repository> repository = repositoryRepository.findById(id);
 
-            // If the repository is already there
-            if (repository.isPresent()) {
-                return true;
+                // If the repository is already there
+                if (repository.isPresent()) {
+                    return true;
+                }
+                Repository newRepo = new Repository(id, full_name);
+                repositoryRepository.save(newRepo);
+
+                // Add default branch (might want to change branch entity to store whether or not a branch is the default)
+                String defaultBranchName = (String) resultJSON.get("default_branch");
+                Branch defaultBranch = new Branch(defaultBranchName, full_name, id);
+                branchRepository.save(defaultBranch);
+
+                boolean validUsers = addUsersFromRepo(username, name, full_name, id);
+                List<Branch> branches = initialiseAllBranchesFromRepo(username, name, full_name, id);
+                boolean validBranches = branches != null;
+                boolean validPullRequests = initialisePullRequestsFromRepo(username, name, full_name, id);
+
+                return validUsers & validBranches & validPullRequests & initialiseAllCommitsFromRepo(username, name, full_name, id, branches);
+            } catch (ParseException e) {
+                System.err.println("Repository Result is invalid");
+                return false;
             }
-            Repository newRepo = new Repository(id, full_name);
-            repositoryRepository.save(newRepo);
-
-            // Add default branch (might want to change branch entity to store whether or not a branch is the default)
-            String defaultBranchName = (String) resultJSON.get("default_branch");
-            Branch defaultBranch = new Branch(defaultBranchName, full_name, id);
-            branchRepository.save(defaultBranch);
-
-            boolean validUsers = addUsersFromRepo(username, name, full_name, id);
-            List<Branch> branches = initialiseAllBranchesFromRepo(username, name, full_name, id);
-            boolean validBranches = branches != null;
-            boolean validPullRequests = initialisePullRequestsFromRepo(username, name, full_name, id);
-
-            return validUsers & validBranches & validPullRequests & initialiseAllCommitsFromRepo(username,name, full_name, id, branches);
-        } catch (ParseException e) {
-            System.err.println("Repository Result is invalid");
+        } catch (HttpClientErrorException e) {
             return false;
         }
     }
@@ -232,10 +234,50 @@ public class DatabaseApiController {
         return users;
     }
 
+    public List<List<String>> getCommitsByUsers(){
+        ArrayList<ArrayList<String>> timeOfCommitsData = new ArrayList<>();
+        HashMap<String, List<Commit>> authorToCommits = new HashMap<>();
+        List<Commit> commits = getCommits();
+
+        for (Commit commit : commits) {
+            //Author name
+            String author = commit.getAuthorName();
+            if (!authorToCommits.containsKey(author)) {
+                authorToCommits.put(author, new ArrayList<>());
+            }
+            List<Commit> authCommits = authorToCommits.get(author);
+            authCommits.add(commit);
+            authorToCommits.put(author, authCommits);
+        }
+        List<List<String>> output = new ArrayList<>();
+        for (String authorName: authorToCommits.keySet()){
+            List<Commit> authorCommits = getCommitsByUser(authorName);
+            String numberOfCommits = Integer.toString(authorCommits.size());
+            int additions = 0;
+            int changes = 0;
+            int deletions = 0;
+            for (Commit commit : authorCommits){
+                additions += commit.getAdditions();
+                changes += commit.getChanges();
+                deletions += commit.getDeletions();
+            }
+            List<String> usersString = new ArrayList<>(Arrays.asList(authorName, numberOfCommits,
+                    Integer.toString(additions), Integer.toString(changes), Integer.toString(deletions)));
+            output.add(usersString);
+
+        }
+        return output;
+    }
+
+    public List<Commit> getCommitsByUser(String name){
+        List<Commit> commits = new ArrayList<>();
+        commits.addAll(commitRepository.findByAuthorName(name));
+        return commits;
+    }
+
     @Transactional
     public void clearRepositoryReferences(String repoFullName){
         Repository repo = repositoryRepository.findByFullName(repoFullName);
-
         if (repo == null){
             return;
         }
