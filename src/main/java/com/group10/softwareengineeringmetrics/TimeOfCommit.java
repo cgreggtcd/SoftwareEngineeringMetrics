@@ -69,13 +69,24 @@ public class TimeOfCommit {
 
         for(int i = 0; i < timeBreakdown.length; i++)
         {
-            timeBreakdown[i][0] = timeOfCommits[1][0];
-            for(int j = 0; j < timeOfCommits[i].length; j++)
+            timeBreakdown[i][0] = timeOfCommits[i][0];
+            for(int j = 1; j < timeOfCommits[i].length; j++)
             {
                 String time = timeOfCommits[i][j];
                 int index = convertTimeIndex(time);
-                timeBreakdown[i][index] += 1;
+                if(timeBreakdown[i][index] != null)
+                {
+                    int current = Integer.parseInt(timeBreakdown[i][index]);
+                    current += 1;
+                    timeBreakdown[i][index] = String.valueOf(current);
+                }
+                else
+                {
+                    timeBreakdown[i][index] = "1";
+                }
+
             }
+
         }
 
         return timeBreakdown;
